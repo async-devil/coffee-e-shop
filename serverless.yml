@@ -1,0 +1,105 @@
+service: coffee-e-shop
+
+frameworkVersion: "3"
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-plugin-optimize
+  - serverless-dynamodb-local
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+
+  apiGateway:
+    shouldStartNameWithService: true
+
+  environment:
+    NODE_ENV: ${env:NODE_ENV, 'development'}
+    DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodbURL}
+    USERS_TABLE_NAME: ${self:custom.usersTable.name}
+    UNIQUES_TABLE_NAME: ${self:custom.uniquesTable.name}
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:DescribeTable"
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
+        - "dynamodb:GetItem"
+        - "dynamodb:PutItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:DeleteItem"
+
+      Resource: ${self:custom.usersTable.arn}
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.usersTable.name}
+
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+        BillingMode: PAY_PER_REQUEST
+
+    uniquesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.uniquesTable.name}
+        AttributeDefinitions:
+          - AttributeName: value
+            AttributeType: S
+
+          - AttributeName: type
+            AttributeType: S
+
+        KeySchema:
+          - AttributeName: value
+            KeyType: HASH
+
+          - AttributeName: type
+            KeyType: RANGE
+
+        BillingMode: PAY_PER_REQUEST
+
+functions:
+  api:
+    handler: src/lambda.handler
+    memorySize: 512
+    events:
+      - http:
+          method: any
+          path: /{proxy+}
+
+custom:
+  usersTable:
+    name: ${self:provider.stage}-users
+    arn: !GetAtt usersTable.Arn
+
+  uniquesTable:
+    name: ${self:provider.stage}-uniques
+    arn: !GetAtt uniquesTable.Arn
+
+  dynamodb:
+    stages:
+      - ${self:provider.stage}
+    start:
+      # docker: true
+      # port: 8000
+      migrate: true
+      # seed: true
+      # convertEmptyValues: true
+  endpoints:
+    dynamodbURL: "http://localhost:8000"

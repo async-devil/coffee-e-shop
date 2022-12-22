@@ -73,6 +73,7 @@
     "serverless-offline": "^12.0.3",
     "serverless-plugin-optimize": "^4.2.1-rc.1",
     "serverless-plugin-typescript": "^2.1.4",
+    "serverless-s3-local": "^0.7.1",
     "source-map-support": "^0.5.20",
     "supertest": "^6.1.3",
     "ts-jest": "28.0.8",

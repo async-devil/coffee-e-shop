@@ -6,6 +6,7 @@ plugins:
   - serverless-plugin-typescript
   - serverless-plugin-optimize
   - serverless-dynamodb-local
+  - serverless-s3-local
   - serverless-offline
 
 provider:
@@ -19,10 +20,11 @@ provider:
     shouldStartNameWithService: true
 
   environment:
-    NODE_ENV: ${env:NODE_ENV, 'development'}
     DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodbURL}
-    USERS_TABLE_NAME: ${self:custom.usersTable.name}
-    UNIQUES_TABLE_NAME: ${self:custom.uniquesTable.name}
+
+    IMAGES_BUCKET_NAME: ${self:provider.stage}-images-bucket
+    USERS_TABLE_NAME: ${self:provider.stage}-users-table
+    UNIQUES_TABLE_NAME: ${self:provider.stage}-uniques-table
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -35,71 +37,34 @@ provider:
         - "dynamodb:UpdateItem"
         - "dynamodb:DeleteItem"
 
-      Resource: ${self:custom.usersTable.arn}
-
-resources:
-  Resources:
-    usersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.usersTable.name}
-
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-
-        BillingMode: PAY_PER_REQUEST
-
-    uniquesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.uniquesTable.name}
-        AttributeDefinitions:
-          - AttributeName: value
-            AttributeType: S
-
-          - AttributeName: type
-            AttributeType: S
-
-        KeySchema:
-          - AttributeName: value
-            KeyType: HASH
-
-          - AttributeName: type
-            KeyType: RANGE
-
-        BillingMode: PAY_PER_REQUEST
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:*
 
 functions:
-  api:
+  Nestjs-backend:
     handler: src/lambda.handler
-    memorySize: 512
+    memorySize: 256
+
     events:
       - http:
           method: any
           path: /{proxy+}
 
-custom:
-  usersTable:
-    name: ${self:provider.stage}-users
-    arn: !GetAtt usersTable.Arn
+resources:
+  Resources:
+    ImagesBucket: ${file(resources/ImagesBucket.yml)}
+    UsersTable: ${file(resources/UsersTable.yml)}
+    UniquesTable: ${file(resources/UniquesTable.yml)}
 
-  uniquesTable:
-    name: ${self:provider.stage}-uniques
-    arn: !GetAtt uniquesTable.Arn
+custom:
+  s3:
+    host: localhost
+    directory: /tmp
 
   dynamodb:
     stages:
       - ${self:provider.stage}
     start:
-      # docker: true
-      # port: 8000
       migrate: true
-      # seed: true
-      # convertEmptyValues: true
+
   endpoints:
     dynamodbURL: "http://localhost:8000"

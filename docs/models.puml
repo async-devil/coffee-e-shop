@@ -84,7 +84,6 @@ end note
 
 User --> UserType
 
-Product --> ProductType
 Product --> ProductOption
 Product --> Category
 

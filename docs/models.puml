@@ -53,6 +53,7 @@ class Order {
   owner_id : User
   items : OrderItem[]
   status : OrderStatus
+  total : string
   create_date : string
 }
 
@@ -68,6 +69,7 @@ class OrderItem {
   product_id : Product
   selected_options : ProductOption[]
   quantity : number
+  total : string
 }
 
 class Cart {

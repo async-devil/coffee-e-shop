@@ -17,7 +17,7 @@ enum UserType {
 
 class Product {
   id : string
-  category_id : Category
+  category : Category
   title : string
   brand : string
   description : string
@@ -43,14 +43,14 @@ class ProductOption {
 
 class Category {
   id : string
-  parent_category_id : Category | null
+  parent_category : Category | null
   name : string
   description : string
 }
 
 class Order {
   id : string
-  owner_id : User
+  owner : User
   items : OrderItem[]
   status : OrderStatus
   total : string
@@ -66,7 +66,7 @@ enum OrderStatus {
 }
 
 class OrderItem {
-  product_id : Product
+  product : Product
   selected_options : ProductOption[]
   quantity : number
   total : string
@@ -74,7 +74,7 @@ class OrderItem {
 
 class Cart {
   id : string
-  owner_id : User
+  owner : User
   items : OrderItem[]
 }
 

@@ -23,7 +23,6 @@ class Product {
   description : string
   preview_description : string
   images : string[]
-  type : ProductType
   avaliable_options : ProductOption[]
   price : number
   avaliable : boolean
@@ -36,11 +35,6 @@ end note
 note right of Product::images
   S3 links
 end note
-
-enum ProductType {
-  COFFEE
-  ACCESSORIES
-}
 
 class ProductOption {
   name : string

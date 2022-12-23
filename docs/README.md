@@ -4,4 +4,4 @@ All docs which are stored here, are written using [PlantUML](https://plantuml.co
 
 ## Models architecture
 
-![models-architecture](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/async-devil/coffee-e-shop/master/docs/database.puml)
+![models-architecture](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/async-devil/coffee-e-shop/master/docs/models.puml)

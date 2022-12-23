@@ -1,0 +1,107 @@
+@startuml models
+
+class User {
+  id : string
+  type : UserType
+  full_name : string
+  email : string
+  phone : string
+  password : string
+  create_date : string
+}
+
+enum UserType {
+  CUSTOMER
+  ADMINISTRATOR
+}
+
+class Product {
+  id : string
+  category_id : Category
+  title : string
+  brand : string
+  description : string
+  preview_description : string
+  images : string[]
+  type : ProductType
+  avaliable_options : ProductOption[]
+  price : number
+  avaliable : boolean
+}
+
+note right of Product::description
+  HTML text
+end note
+
+note right of Product::images
+  S3 links
+end note
+
+enum ProductType {
+  COFFEE
+  ACCESSORIES
+}
+
+class ProductOption {
+  name : string
+  values : string[]
+}
+
+class Category {
+  id : string
+  parent_category_id : Category | null
+  name : string
+  description : string
+}
+
+class Order {
+  id : string
+  owner_id : User
+  items : OrderItem[]
+  status : OrderStatus
+  create_date : string
+}
+
+enum OrderStatus {
+  CREATED
+  PAID
+  DELIVERING
+  CANCELED
+  COMPLETED
+}
+
+class OrderItem {
+  product_id : Product
+  selected_options : ProductOption[]
+  quantity : number
+}
+
+class Cart {
+  id : string
+  owner_id : User
+  items : OrderItem[]
+}
+
+note right of Cart::owner_id
+  Handled only for registered users.
+  If not, client side only
+end note
+
+
+User --> UserType
+
+Product --> ProductType
+Product --> ProductOption
+Product --> Category
+
+Order --> User
+Order --> OrderItem
+Order --> OrderStatus
+
+OrderItem --> Product
+OrderItem --> ProductOption
+
+Cart --> User
+Cart --> OrderItem
+
+@enduml

@@ -1,11 +1,15 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ApiOperation } from "@nestjs/swagger";
 
+import { ImagesRepository } from "./images.repository";
 import { UsersService } from "./users.service";
 
 @Controller("users")
 export class UsersController {
-	constructor(private readonly usersService: UsersService) {}
+	constructor(
+		private readonly usersService: UsersService,
+		private readonly imagesRepository: ImagesRepository
+	) {}
 
 	@ApiOperation({ summary: "Create user" })
 	@Post("/")

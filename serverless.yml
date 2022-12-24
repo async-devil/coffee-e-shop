@@ -21,10 +21,11 @@ provider:
 
   environment:
     DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodbURL}
+    S3_ENDPOINT: ${self:custom.endpoints.s3URL}
 
-    IMAGES_BUCKET_NAME: ${self:provider.stage}-images-bucket
-    USERS_TABLE_NAME: ${self:provider.stage}-users-table
-    UNIQUES_TABLE_NAME: ${self:provider.stage}-uniques-table
+    IMAGES_BUCKET_NAME: ${self:service}-images-bucket
+    USERS_TABLE_NAME: ${self:service}-users-table
+    UNIQUES_TABLE_NAME: ${self:service}-uniques-table
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -38,6 +39,12 @@ provider:
         - "dynamodb:DeleteItem"
 
       Resource: arn:aws:dynamodb:${self:provider.region}:*:*
+
+    - Effect: "Allow"
+      Action:
+        - "s3:*Object"
+
+      Resource: arn:aws:s3:::${self:provider.environment.IMAGES_BUCKET_NAME}/*
 
 functions:
   Nestjs-backend:
@@ -67,4 +74,5 @@ custom:
       migrate: true
 
   endpoints:
-    dynamodbURL: "http://localhost:8000"
+    dynamodbURL: http://localhost:8000
+    s3URL: http://localhost:4569

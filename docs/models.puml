@@ -1,5 +1,9 @@
 @startuml models
 
+
+/' User '/
+
+
 class User {
   id : string
   type : UserType
@@ -15,6 +19,13 @@ enum UserType {
   ADMINISTRATOR
 }
 
+
+User --> UserType
+
+
+/' Product '/
+
+
 class Product {
   id : string
   category : Category
@@ -23,23 +34,39 @@ class Product {
   description : string
   preview_description : string
   images : string[]
-  avaliable_options : ProductOption[]
-  price : number
-  avaliable : boolean
+  variations_name : string
+  variations : ProductVariation[]
+  options : ProductOption[]
+  archived : boolean
 }
 
 note right of Product::description
   HTML text
 end note
-
 note right of Product::images
   S3 links
 end note
+
+
+class ProductVariation {
+  title : string
+  price : string
+  available : boolean
+}
 
 class ProductOption {
   name : string
   values : string[]
 }
+
+
+Product --> ProductVariation
+Product --> ProductOption
+Product --> Category
+
+
+/' Category '/
+
 
 class Category {
   id : string
@@ -47,6 +74,10 @@ class Category {
   name : string
   description : string
 }
+
+
+/' Order '/
+
 
 class Order {
   id : string
@@ -65,12 +96,26 @@ enum OrderStatus {
   COMPLETED
 }
 
+
 class OrderItem {
   product : Product
+  selected_variation : ProductVariation
   selected_options : ProductOption[]
   quantity : number
-  total : string
 }
+
+
+Order --> User
+Order --> OrderItem
+Order --> OrderStatus
+
+OrderItem --> Product
+OrderItem --> ProductVariation
+OrderItem --> ProductOption
+
+
+/' Cart '/
+
 
 class Cart {
   id : string
@@ -83,18 +128,6 @@ note right of Cart::owner_id
   If not, client side only
 end note
 
-
-User --> UserType
-
-Product --> ProductOption
-Product --> Category
-
-Order --> User
-Order --> OrderItem
-Order --> OrderStatus
-
-OrderItem --> Product
-OrderItem --> ProductOption
 
 Cart --> User
 Cart --> OrderItem

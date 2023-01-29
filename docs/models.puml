@@ -1,135 +1,93 @@
 @startuml models
 
-
-/' User '/
-
-
-class User {
+class Language {
   id : string
-  type : UserType
-  full_name : string
-  email : string
-  phone : string
-  password : string
-  create_date : string
+  code : ISO 635-1
 }
-
-enum UserType {
-  CUSTOMER
-  ADMINISTRATOR
-}
-
-
-User --> UserType
-
-
-/' Product '/
-
 
 class Product {
   id : string
-  category : Category
-  title : string
-  brand : string
+  archieved : boolean
+  caterogies : Category[]
+  images : ProductImage[]
+  created_at : number
+}
+Product --> Category
+Product --> ProductImage
+
+class ProductTranslation {
+  id : string
+  product_id : string
+  language : Language
+  name : string
   description : string
   preview_description : string
-  images : string[]
-  variations_name : string
-  variations : ProductVariation[]
-  options : ProductOption[]
-  archived : boolean
+  text : string
 }
+ProductTranslation --> Product
+ProductTranslation --> Language
 
-note right of Product::description
-  HTML text
-end note
-note right of Product::images
-  S3 links
-end note
-
-
-class ProductVariation {
-  title : string
-  price : string
-  available : boolean
-}
-
-class ProductOption {
+class ProductEdition {
+  id : string
+  product_id : string
   name : string
-  values : string[]
+  price : number
+  availiable : boolean
 }
+ProductEdition --> Product
 
-
-Product --> ProductVariation
-Product --> ProductOption
-Product --> Category
-
-
-/' Category '/
-
+class ProductImage {
+  id : string
+  alias : string
+}
 
 class Category {
   id : string
-  parent_category : Category | null
-  name : string
-  description : string
+  alias : string
+  created_at : number
 }
 
-
-/' Order '/
-
+class CategoryTranslation {
+  id : string
+  category_id : string
+  language : Language
+  name : string
+  page_text : string
+}
+CategoryTranslation --> Category
+CategoryTranslation --> Language
 
 class Order {
   id : string
-  owner : User
-  items : OrderItem[]
-  status : OrderStatus
-  total : string
-  create_date : string
+  state : OrderState
+  first_name : string
+  last_name : string
+  middle_name : string
+  country : string
+  city : string
+  region : string
+  address : string
+  zip_code : string
+  email : string
+  phone_number : string
+  track_code : string
+  language : Language
+  amount : number
+  products : OrderItem[]
 }
-
-enum OrderStatus {
-  CREATED
-  PAID
-  DELIVERING
-  CANCELED
-  COMPLETED
-}
-
+Order --> Language
+Order --> OrderItem
 
 class OrderItem {
-  product : Product
-  selected_variation : ProductVariation
-  selected_options : ProductOption[]
-  quantity : number
-}
-
-
-Order --> User
-Order --> OrderItem
-Order --> OrderStatus
-
-OrderItem --> Product
-OrderItem --> ProductVariation
-OrderItem --> ProductOption
-
-
-/' Cart '/
-
-
-class Cart {
   id : string
-  owner : User
-  items : OrderItem[]
+  product_id : string
+  name : string
+  price : number
+  amount : number
+  total_count : number
+  edition : ProductEdition
 }
-
-note right of Cart::owner_id
-  Handled only for registered users.
-  If not, client side only
-end note
-
-
-Cart --> User
-Cart --> OrderItem
+OrderItem --> Product
+OrderItem --> ProductEdition
 
 @enduml

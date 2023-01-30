@@ -1,10 +1,5 @@
 @startuml models
 
-class Language {
-  id : string
-  code : ISO 635-1
-}
-
 class Product {
   id : string
   archived : boolean
@@ -16,16 +11,14 @@ Product --> Category
 Product --> ProductImage
 
 class ProductTranslation {
-  id : string
   product_id : string
-  language : Language
+  language : ISO 635-1
   name : string
   description : string
   preview_description : string
   text : string
 }
 ProductTranslation --> Product
-ProductTranslation --> Language
 
 class ProductEdition {
   id : string
@@ -48,14 +41,12 @@ class Category {
 }
 
 class CategoryTranslation {
-  id : string
   category_id : string
-  language : Language
+  language : ISO 635-1
   name : string
   page_text : string
 }
 CategoryTranslation --> Category
-CategoryTranslation --> Language
 
 class Order {
   id : string
@@ -71,11 +62,10 @@ class Order {
   email : string
   phone_number : string
   track_code : string
-  language : Language
+  language : ISO 635-1
   amount : number
   products : OrderItem[]
 }
-Order --> Language
 Order --> OrderItem
 
 class OrderItem {

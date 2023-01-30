@@ -7,8 +7,8 @@ class Language {
 
 class Product {
   id : string
-  archieved : boolean
-  caterogies : Category[]
+  archived : boolean
+  categories : Category[]
   images : ProductImage[]
   created_at : number
 }
@@ -32,7 +32,7 @@ class ProductEdition {
   product_id : string
   name : string
   price : number
-  availiable : boolean
+  available : boolean
 }
 ProductEdition --> Product
 

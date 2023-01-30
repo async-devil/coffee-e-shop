@@ -1,0 +1,31 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: ${self:provider.environment.PRODUCT_TRANSLATIONS_TABLE_NAME}
+
+  AttributeDefinitions:
+    - AttributeName: product_id
+      AttributeType: S
+
+    - AttributeName: language
+      AttributeType: S
+
+    - AttributeName: name
+      AttributeType: S
+
+    - AttributeName: description
+      AttributeType: S
+
+    - AttributeName: preview_description
+      AttributeType: S
+
+    - AttributeName: text
+      AttributeType: S
+
+  KeySchema:
+    - AttributeName: product_id
+      KeyType: HASH
+
+    - AttributeName: language
+      KeyType: RANGE
+
+  BillingMode: PAY_PER_REQUEST

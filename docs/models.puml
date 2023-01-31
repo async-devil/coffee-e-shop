@@ -4,11 +4,11 @@ class Product {
   id : string
   archived : boolean
   categories : Category[]
-  images : ProductImage[]
+  images : Image[]
   created_at : number
 }
 Product --> Category
-Product --> ProductImage
+Product --> Image
 
 class ProductTranslation {
   product_id : string
@@ -29,9 +29,9 @@ class ProductEdition {
 }
 ProductEdition --> Product
 
-class ProductImage {
-  id : string
+class Image {
   alias : string
+  created_at : number
 }
 
 class Category {

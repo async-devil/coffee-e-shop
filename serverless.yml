@@ -24,8 +24,17 @@ provider:
     S3_ENDPOINT: ${self:custom.endpoints.s3URL}
 
     IMAGES_BUCKET_NAME: ${self:service}-images-bucket
-    USERS_TABLE_NAME: ${self:service}-users-table
-    UNIQUES_TABLE_NAME: ${self:service}-uniques-table
+    IMAGES_TABLE_NAME: ${self:service}-images-table
+
+    PRODUCTS_TABLE_NAME: ${self:service}-products-table
+    PRODUCT_EDITIONS_TABLE_NAME: ${self:service}-product-editions-table
+    PRODUCT_TRANSLATIONS_TABLE_NAME: ${self:service}-product-translations-table
+
+    CATEGORIES_TABLE_NAME: ${self:service}-categories-table
+    CATEGORY_TRANSLATIONS_TABLE_NAME: ${self:service}-category-translations-table
+
+    ORDERS_TABLE_NAME: ${self:service}-orders-table
+    ORDER_ITEMS_TABLE_NAME: ${self:service}-order-items-table
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -47,9 +56,9 @@ provider:
       Resource: arn:aws:s3:::${self:provider.environment.IMAGES_BUCKET_NAME}/*
 
 functions:
-  Nestjs-backend:
+  nestjs-backend:
     handler: src/lambda.handler
-    memorySize: 256
+    memorySize: 128
 
     events:
       - http:
@@ -58,9 +67,18 @@ functions:
 
 resources:
   Resources:
-    ImagesBucket: ${file(resources/ImagesBucket.yml)}
-    UsersTable: ${file(resources/UsersTable.yml)}
-    UniquesTable: ${file(resources/UniquesTable.yml)}
+    ImagesBucket: ${file(resources/Images.bucket.yml)}
+    ImagesTable: ${file(resources/Images.table.yml)}
+
+    ProductsTable: ${file(resources/product/Products.table.yml)}
+    ProductEditionsTable: ${file(resources/product/ProductEditions.table.yml)}
+    ProductTranslationsTable: ${file(resources/product/ProductTranslations.table.yml)}
+
+    CategoriesTable: ${file(resources/category/Categories.table.yml)}
+    CategoryTranslationsTable: ${file(resources/category/CategoryTranslations.table.yml)}
+
+    OrdersTable: ${file(resources/order/Orders.table.yml)}
+    OrderItemsTable: ${file(resources/order/OrderItems.table.yml)}
 
 custom:
   s3:

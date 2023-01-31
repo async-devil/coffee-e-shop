@@ -1,0 +1,28 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: ${self:provider.environment.PRODUCT_EDITIONS_TABLE_NAME}
+
+  AttributeDefinitions:
+    - AttributeName: product_id
+      AttributeType: S
+
+    - AttributeName: id
+      AttributeType: S
+
+    # - AttributeName: name
+    #   AttributeType: S
+
+    # - AttributeName: price
+    #   AttributeType: S
+
+    # - AttributeName: available
+    #   AttributeType: BOOL
+
+  KeySchema:
+    - AttributeName: product_id
+      KeyType: HASH
+
+    - AttributeName: id
+      KeyType: RANGE
+
+  BillingMode: PAY_PER_REQUEST

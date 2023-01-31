@@ -1,0 +1,34 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: ${self:provider.environment.ORDER_ITEMS_TABLE_NAME}
+
+  AttributeDefinitions:
+    - AttributeName: order_id
+      AttributeType: S
+
+    - AttributeName: product_id
+      AttributeType: S
+
+    # - AttributeName: name
+    #   AttributeType: S
+
+    # - AttributeName: edition_name
+    #   AttributeType: S
+
+    # - AttributeName: price
+    #   AttributeType: N
+
+    # - AttributeName: amount
+    #   AttributeType: N
+
+    # - AttributeName: total_count
+    #   AttributeType: N
+
+  KeySchema:
+    - AttributeName: order_id
+      KeyType: HASH
+
+    - AttributeName: product_id
+      KeyType: RANGE
+
+  BillingMode: PAY_PER_REQUEST

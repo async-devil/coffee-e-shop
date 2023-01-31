@@ -6,17 +6,17 @@ Properties:
     - AttributeName: id
       AttributeType: S
 
-    - AttributeName: archived
-      AttributeType: BOOL
+    # - AttributeName: archived
+    #   AttributeType: BOOL
 
-    - AttributeName: categories
-      AttributeType: SS
+    # - AttributeName: categories
+    #   AttributeType: SS
 
-    - AttributeName: images
-      AttributeType: SS
+    # - AttributeName: images
+    #   AttributeType: SS
 
-    - AttributeName: created_at
-      AttributeType: N
+    # - AttributeName: created_at
+    #   AttributeType: N
 
   KeySchema:
     - AttributeName: id

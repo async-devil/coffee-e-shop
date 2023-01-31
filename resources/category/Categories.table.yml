@@ -1,10 +1,16 @@
 Type: AWS::DynamoDB::Table
 Properties:
-  TableName: ${self:provider.environment.USERS_TABLE_NAME}
+  TableName: ${self:provider.environment.CATEGORIES_TABLE_NAME}
 
   AttributeDefinitions:
     - AttributeName: id
       AttributeType: S
+
+    # - AttributeName: alias
+    #   AttributeType: S
+
+    # - AttributeName: created_at
+    #   AttributeType: N
 
   KeySchema:
     - AttributeName: id

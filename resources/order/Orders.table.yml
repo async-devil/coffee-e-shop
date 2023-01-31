@@ -1,0 +1,61 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: ${self:provider.environment.ORDERS_TABLE_NAME}
+
+  AttributeDefinitions:
+    - AttributeName: id
+      AttributeType: S
+
+    - AttributeName: state
+      AttributeType: S
+
+    # - AttributeName: first_name
+    #   AttributeType: S
+
+    # - AttributeName: last_name
+    #   AttributeType: S
+
+    # - AttributeName: middle_name
+    #   AttributeType: S
+
+    # - AttributeName: country
+    #   AttributeType: S
+
+    # - AttributeName: region
+    #   AttributeType: S
+
+    # - AttributeName: city
+    #   AttributeType: S
+
+    # - AttributeName: address
+    #   AttributeType: S
+
+    # - AttributeName: zip_code
+    #   AttributeType: S
+
+    # - AttributeName: email
+    #   AttributeType: S
+
+    # - AttributeName: phone_number
+    #   AttributeType: S
+
+    # - AttributeName: language
+    #   AttributeType: S
+
+    # - AttributeName: track_code
+    #   AttributeType: S
+
+    # - AttributeName: amount
+    #   AttributeType: N
+
+    # - AttributeName: created_at
+    #   AttributeType: N
+
+  KeySchema:
+    - AttributeName: id
+      KeyType: HASH
+
+    - AttributeName: state
+      KeyType: RANGE
+
+  BillingMode: PAY_PER_REQUEST

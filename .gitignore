@@ -5,6 +5,7 @@
 /.serverless
 /.dynamodb
 /node_modules
+/.webpack
 
 # Logs
 logs

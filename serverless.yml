@@ -3,7 +3,7 @@ service: coffee-e-shop
 frameworkVersion: "3"
 
 plugins:
-  - serverless-plugin-typescript
+  - serverless-webpack
   - serverless-plugin-optimize
   - serverless-s3-local
   - serverless-offline
@@ -48,6 +48,10 @@ resources:
     ImagesTable: ${file(resources/Images.table.yml)}
 
 custom:
+  webpack:
+    webpackConfig: webpack.config.cjs
+    packager: yarn
+
   s3:
     host: localhost
     directory: /tmp

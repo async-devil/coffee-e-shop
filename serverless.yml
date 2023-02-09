@@ -5,7 +5,6 @@ frameworkVersion: "3"
 plugins:
   - serverless-plugin-typescript
   - serverless-plugin-optimize
-  - serverless-dynamodb-local
   - serverless-s3-local
   - serverless-offline
 
@@ -26,29 +25,7 @@ provider:
     IMAGES_BUCKET_NAME: ${self:service}-images-bucket
     IMAGES_TABLE_NAME: ${self:service}-images-table
 
-    PRODUCTS_TABLE_NAME: ${self:service}-products-table
-    PRODUCT_EDITIONS_TABLE_NAME: ${self:service}-product-editions-table
-    PRODUCT_TRANSLATIONS_TABLE_NAME: ${self:service}-product-translations-table
-
-    CATEGORIES_TABLE_NAME: ${self:service}-categories-table
-    CATEGORY_TRANSLATIONS_TABLE_NAME: ${self:service}-category-translations-table
-
-    ORDERS_TABLE_NAME: ${self:service}-orders-table
-    ORDER_ITEMS_TABLE_NAME: ${self:service}-order-items-table
-
   iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "dynamodb:DescribeTable"
-        - "dynamodb:Query"
-        - "dynamodb:Scan"
-        - "dynamodb:GetItem"
-        - "dynamodb:PutItem"
-        - "dynamodb:UpdateItem"
-        - "dynamodb:DeleteItem"
-
-      Resource: arn:aws:dynamodb:${self:provider.region}:*:*
-
     - Effect: "Allow"
       Action:
         - "s3:*Object"
@@ -70,26 +47,10 @@ resources:
     ImagesBucket: ${file(resources/Images.bucket.yml)}
     ImagesTable: ${file(resources/Images.table.yml)}
 
-    ProductsTable: ${file(resources/product/Products.table.yml)}
-    ProductEditionsTable: ${file(resources/product/ProductEditions.table.yml)}
-    ProductTranslationsTable: ${file(resources/product/ProductTranslations.table.yml)}
-
-    CategoriesTable: ${file(resources/category/Categories.table.yml)}
-    CategoryTranslationsTable: ${file(resources/category/CategoryTranslations.table.yml)}
-
-    OrdersTable: ${file(resources/order/Orders.table.yml)}
-    OrderItemsTable: ${file(resources/order/OrderItems.table.yml)}
-
 custom:
   s3:
     host: localhost
     directory: /tmp
-
-  dynamodb:
-    stages:
-      - ${self:provider.stage}
-    start:
-      migrate: true
 
   endpoints:
     dynamodbURL: http://localhost:8000

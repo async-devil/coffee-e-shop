@@ -1,0 +1,93 @@
+version: "3.2"
+services:
+  postgres:
+    image: postgres:15.2
+    container_name: coffee-e-shop-postgres
+    hostname: postgres
+
+    env_file: ./.dev.env
+
+    ports:
+      - 5432:5432
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - postgres_network
+
+    restart: on-failure
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: coffee-e-shop-pgadmin4
+
+    logging:
+      driver: none
+
+    env_file: ./.dev.env
+
+    ports:
+      - "5050:80"
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASS}
+
+    depends_on:
+      - postgres
+    networks:
+      - postgres_network
+
+    restart: on-failure
+
+  localstack-s3:
+    image: localstack/localstack:latest
+    container_name: localstack-s3
+
+    environment:
+      - SERVICES=s3
+      - EDGE_PORT=4566
+      - PERSISTENCE=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+
+    ports:
+      - 4566-4583:4566-4583
+      - 40877-40877
+
+    volumes:
+      - localstack-data:/var/lib/localstack
+
+  backend:
+    image: coffee-e-shop-backend
+    container_name: coffee-e-shop-backend
+
+    build:
+      context: ./apps/backend
+      target: development
+
+    env_file: ./.dev.env
+
+    ports:
+      - 8000:8000
+
+    depends_on:
+      - postgres
+    networks:
+      - postgres_network
+
+    restart: on-failure
+
+volumes:
+  postgres_data:
+
+  localstack-data:
+
+
+networks:
+  postgres_network:
+    driver: bridge

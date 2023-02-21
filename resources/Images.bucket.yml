@@ -1,3 +1,0 @@
-Type: AWS::S3::Bucket
-Properties:
-  BucketName: ${self:provider.environment.IMAGES_BUCKET_NAME}

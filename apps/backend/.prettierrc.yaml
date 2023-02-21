@@ -11,14 +11,6 @@ jsxBracketSameLine: false
 parser: babel-ts
 
 overrides:
-  - files: "*.css"
-    options:
-      parser: css
-
-  - files: "*.scss"
-    options:
-      parser: scss
-
   - files: "*.{yaml,yml}"
     options:
       parser: yaml
@@ -30,7 +22,3 @@ overrides:
   - files: "*.json"
     options:
       parser: json
-
-  - files: "*.html"
-    options:
-      parser: html

@@ -1,3 +1,6 @@
+// Used plugins:
+// eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-jest eslint-plugin-prettier eslint-plugin-promise eslint-plugin-security-node eslint-plugin-sonarjs
+
 const mainRules = {
 	"import/order": [
 		1,

@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Coffee e-shop cloudformation template
+
+Parameters:
+  ImagesBucketName:
+    Type: String
+    Default: coffee-e-shop-images
+    Description: The name of the S3 Bucket to create
+
+Resources:
+  S3ImagesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref ImagesBucketName
+      AccessControl: PublicRead
+
+  S3ImagesBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3ImagesBucket
+      PolicyDocument:
+        Id: S3ImagesBucketPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Action: s3:GetObject
+            Principal: "*"
+            Resource: !Sub "arn:aws:s3:::${S3ImagesBucket}/*"
+
+          - Sid: WriteAndDeleteForBucketOwner
+            Effect: Allow
+            Action:
+              - s3:PutObject
+              - s3:DeleteObject
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Resource: !Sub "arn:aws:s3:::${S3ImagesBucket}/*"

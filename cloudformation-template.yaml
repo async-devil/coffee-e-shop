@@ -8,6 +8,11 @@ Parameters:
     Description: The name of the S3 Bucket to create
 
 Resources:
+  IAMShopAdmin:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: coffee-e-shop-admin
+
   S3ImagesBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -34,5 +39,5 @@ Resources:
               - s3:PutObject
               - s3:DeleteObject
             Principal:
-              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:user/${IAMShopAdmin}"
             Resource: !Sub "arn:aws:s3:::${S3ImagesBucket}/*"

@@ -45,23 +45,6 @@ services:
 
     restart: on-failure
 
-  localstack-s3:
-    image: localstack/localstack:latest
-    container_name: localstack-s3
-
-    environment:
-      - SERVICES=s3
-      - EDGE_PORT=4566
-      - PERSISTENCE=1
-      - DOCKER_HOST=unix:///var/run/docker.sock
-
-    ports:
-      - 4566-4583:4566-4583
-      - 40877-40877
-
-    volumes:
-      - localstack-data:/var/lib/localstack
-
   backend:
     image: coffee-e-shop-backend
     container_name: coffee-e-shop-backend

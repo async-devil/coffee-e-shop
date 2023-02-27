@@ -1,17 +1,16 @@
 import { Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
-import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { typeOrmConfigBase } from "./database/ormconfig";
+import { ImagesModule } from "./modules/images/images.module";
 
 @Module({
 	imports: [
 		ThrottlerModule.forRoot({
 			ttl: 60,
-			limit: 2,
+			limit: 100,
 		}),
-		TypeOrmModule.forRoot(typeOrmConfigBase()),
+		ImagesModule,
 	],
 	controllers: [],
 	providers: [

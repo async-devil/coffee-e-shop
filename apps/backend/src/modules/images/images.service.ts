@@ -5,9 +5,9 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ImageEntity } from "src/entities/image.entity";
-
 import { CreateImageDto } from "./dtos/create-image.dto";
+import { ImageFilesRepository } from "./imageFiles.repository";
+import { ImageRecordsRepository } from "./imageRecords.repository";
 
 @Injectable()
 export class ImagesService {
@@ -23,21 +23,9 @@ export class ImagesService {
 	private readonly fileExtensionRegExp = new RegExp(/\.[0-9a-z]+$/i);
 
 	constructor(
-		@InjectRepository(ImageEntity) private readonly imageRepository: Repository<ImageEntity>
-	) {
-		if (process.env.NODE_ENV === "development") {
-			this.s3Client = new S3Client({
-				credentials: {
-					accessKeyId: process.env.AWS_ACCESS_KEY,
-					secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-				},
-				region: this.region,
-			});
-		} else {
-			// EC2 is allowed to use S3 without any access keys
-			this.s3Client = new S3Client({ region: this.region });
-		}
-	}
+		private readonly imageFilesRepository: ImageFilesRepository,
+		private readonly imageRecordsRepository: ImageRecordsRepository
+	) {}
 
 	public async uploadImage(file: Express.Multer.File, dto: CreateImageDto) {
 		console.log(file);
@@ -51,25 +39,8 @@ export class ImagesService {
 
 		const key = `${randomUUID()}${extension}`;
 
-		await this.uploadFile(file.buffer, key);
+		await this.imageFilesRepository.uploadFile(file.buffer, key);
 
-		return await this.addImageRecord(name, key);
-	}
-
-	public async uploadFile(fileBuffer: Buffer, key: string) {
-		const command = new PutObjectCommand({
-			Bucket: this.imagesBucketName,
-			Body: fileBuffer,
-			Key: key,
-		});
-
-		return await this.s3Client.send(command);
-	}
-
-	public async addImageRecord(name: string, key: string) {
-		return await this.imageRepository.save({
-			name,
-			url: `https://s3.${this.region}.amazonaws.com/${this.imagesBucketName}/${key}`,
-		});
+		return await this.imageRecordsRepository.putRecord(key, name);
 	}
 }

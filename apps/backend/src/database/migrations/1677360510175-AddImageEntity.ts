@@ -7,11 +7,13 @@ export class AddImageEntity1677360510175 implements MigrationInterface {
 		await queryRunner.query(
 			`--sql
 			CREATE TABLE "image" (
-				"key"         text NOT NULL,
-				"name"        text NOT NULL,
-				"created_at"  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+				"id"         SERIAL NOT NULL,
+				"url"        text NOT NULL,
+				"name"       text NOT NULL,
+				"created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
 
-				CONSTRAINT "PK_7c77ec1a4c00eda85540cbe57ae" PRIMARY KEY ("key")
+				CONSTRAINT "UQ_602959dc3010ff4b4805ee7f104" UNIQUE ("url"),
+				CONSTRAINT "PK_d6db1ab4ee9ad9dbe86c64e4cc3" PRIMARY KEY ("id")
 			)
 			`
 		);

@@ -2,15 +2,15 @@ import * as path from "path";
 
 import { DataSource, DataSourceOptions } from "typeorm";
 
+import config from "src/config/config";
+
 export const typeOrmConfigBase = (): DataSourceOptions => {
+	const { postgres } = config();
+
 	return {
 		type: "postgres",
 
-		host: process.env.POSTGRES_HOST || "127.0.0.1",
-		port: parseInt(process.env.POSTGRES_PORT) || 5432,
-		username: process.env.POSTGRES_USERNAME || "root",
-		password: process.env.POSTGRES_PASSWORD || "toor",
-		database: process.env.POSTGRES_DATABASE || "coffee-e-shop",
+		...postgres,
 
 		migrationsRun: false,
 		dropSchema: false,

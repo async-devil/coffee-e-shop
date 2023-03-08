@@ -4,9 +4,10 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
 
 import { AppModule } from "./app.module";
+import config from "./config/config";
 
 async function bootstrap() {
-	const port = process.env.PORT || 8000;
+	const { port } = config();
 
 	const swaggerConfig = new DocumentBuilder()
 		.setTitle("Nestjs template")

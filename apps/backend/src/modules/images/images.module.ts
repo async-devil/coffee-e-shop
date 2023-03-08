@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { typeOrmConfigBase } from "src/database/ormconfig";
 import { ImageEntity } from "src/entities/image.entity";
-import { ConfigService } from "src/services/config.service";
 
 import { ImageFilesRepository } from "./imageFiles.repository";
 import { ImageRecordsRepository } from "./imageRecords.repository";

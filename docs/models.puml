@@ -1,5 +1,11 @@
 @startuml models
 
+interface Item {
+  id : string
+  name : string
+  price : string
+}
+
 class Product {
   id : string
   archived : boolean
@@ -7,7 +13,9 @@ class Product {
   images : Image[]
   created_at : number
 }
-Product --> Category
+Product *-- ProductTranslation
+Product *-- ProductEdition
+Product ..> Category
 Product --> Image
 
 class ProductTranslation {
@@ -18,7 +26,6 @@ class ProductTranslation {
   preview_description : string
   text : string
 }
-ProductTranslation --> Product
 
 class ProductEdition {
   id : string
@@ -27,7 +34,7 @@ class ProductEdition {
   price : number
   available : boolean
 }
-ProductEdition --> Product
+ProductEdition ..|> Item
 
 class Image {
   alias : string
@@ -40,13 +47,14 @@ class Category {
   created_at : number
 }
 
+Category *-- CategoryTranslation
+
 class CategoryTranslation {
   category_id : string
   language : ISO 635-1
   name : string
   page_text : string
 }
-CategoryTranslation --> Category
 
 class Order {
   id : string
@@ -66,6 +74,7 @@ class Order {
   amount : number
   created_at : number
 }
+Order *.. OrderItem
 
 class OrderItem {
   order_id : string
@@ -76,8 +85,7 @@ class OrderItem {
   amount : number
   total_count : number
 }
-OrderItem --> Order
-OrderItem --> Product
-OrderItem --> ProductEdition
+OrderItem ..|> Item
+OrderItem ..> Product
 
 @enduml

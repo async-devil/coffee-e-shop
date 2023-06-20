@@ -17,7 +17,11 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref ImagesBucketName
-      AccessControl: PublicRead
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: ObjectWriter
 
   S3ImagesBucketPolicy:
     Type: AWS::S3::BucketPolicy

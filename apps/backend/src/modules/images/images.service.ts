@@ -1,9 +1,5 @@
-import { randomUUID } from "crypto";
-
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { S3Client } from "@aws-sdk/client-s3";
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 
 import { CreateImageDto } from "./dtos/create-image.dto";
 import { ImageFilesRepository } from "./imageFiles.repository";
@@ -37,10 +33,10 @@ export class ImagesService {
 		const extension = file.originalname.match(this.fileExtensionRegExp)[0];
 		const name = dto.name || file.originalname.replace(extension, "");
 
-		const key = `${randomUUID()}${extension}`;
+		const key = `${name}${extension}`;
 
 		await this.imageFilesRepository.uploadFile(file.buffer, key);
 
-		return await this.imageRecordsRepository.putRecord(key, name);
+		return await this.imageRecordsRepository.putRecord(name);
 	}
 }

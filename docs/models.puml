@@ -7,7 +7,7 @@ interface Item {
 }
 
 class Product {
-  id : string
+  <b>id : string
   archived : boolean
   categories : Category[]
   images : Image[]
@@ -19,6 +19,7 @@ Product ..> Category
 Product --> Image
 
 class ProductTranslation {
+  <b>id: string
   product_id : string
   language : ISO 635-1
   name : string
@@ -28,7 +29,7 @@ class ProductTranslation {
 }
 
 class ProductEdition {
-  id : string
+  <b>id : string
   product_id : string
   name : string
   price : number
@@ -37,19 +38,20 @@ class ProductEdition {
 ProductEdition ..|> Item
 
 class Image {
-  alias : string
+  <b>name : string
   created_at : number
 }
 
 class Category {
-  id : string
-  alias : string
+  <b>id : string
+  name : string
   created_at : number
 }
 
 Category *-- CategoryTranslation
 
 class CategoryTranslation {
+  <b>id: string
   category_id : string
   language : ISO 635-1
   name : string
@@ -57,7 +59,7 @@ class CategoryTranslation {
 }
 
 class Order {
-  id : string
+  <b>id : string
   state : OrderState
   first_name : string
   last_name : string
@@ -77,6 +79,7 @@ class Order {
 Order *.. OrderItem
 
 class OrderItem {
+  <b>id: string
   order_id : string
   product_id : string
   name : string

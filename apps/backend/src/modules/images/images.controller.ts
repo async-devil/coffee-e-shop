@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 
+import { AddImageLinkDto } from "./dtos/add-image-link.dto";
 import { CreateImageDto } from "./dtos/create-image.dto";
 import { ImagesService } from "./images.service";
 
@@ -12,5 +13,10 @@ export class ImagesController {
 	@UseInterceptors(FileInterceptor("file"))
 	public async uploadImage(@UploadedFile() file: Express.Multer.File, @Body() dto: CreateImageDto) {
 		return await this.imagesService.uploadImage(file, dto);
+	}
+
+	@Post("/add")
+	public async addImageLink(@Body() dto: AddImageLinkDto) {
+		return await this.imagesService.addImageLink(dto.name, dto.url);
 	}
 }

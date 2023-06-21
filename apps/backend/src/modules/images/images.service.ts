@@ -24,8 +24,6 @@ export class ImagesService {
 	) {}
 
 	public async uploadImage(file: Express.Multer.File, dto: CreateImageDto) {
-		console.log(file);
-
 		if (!file) {
 			throw new BadRequestException("Image is not provided");
 		}
@@ -41,5 +39,9 @@ export class ImagesService {
 			name,
 			this.imageFilesRepository.getFileUrl(key)
 		);
+	}
+
+	public async addImageLink(name: string, url: string) {
+		return await this.imageRecordsRepository.putRecord(name, url);
 	}
 }

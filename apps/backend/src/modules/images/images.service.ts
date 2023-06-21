@@ -37,6 +37,9 @@ export class ImagesService {
 
 		await this.imageFilesRepository.uploadFile(file.buffer, key);
 
-		return await this.imageRecordsRepository.putRecord(name);
+		return await this.imageRecordsRepository.putRecord(
+			name,
+			this.imageFilesRepository.getFileUrl(key)
+		);
 	}
 }

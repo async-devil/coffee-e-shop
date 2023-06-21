@@ -10,9 +10,10 @@ export class ImageRecordsRepository {
 		@InjectRepository(ImageEntity) private readonly imageRepository: Repository<ImageEntity>
 	) {}
 
-	public async putRecord(name: string) {
+	public async putRecord(name: string, url: string) {
 		return await this.imageRepository.save({
 			name,
+			url,
 		});
 	}
 

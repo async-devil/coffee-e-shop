@@ -9,9 +9,14 @@ import { ImageFilesRepository } from "./imageFiles.repository";
 import { ImageRecordsRepository } from "./imageRecords.repository";
 import { ImagesController } from "./images.controller";
 import { ImagesService } from "./images.service";
+import { AuthModule } from "../auth/auth.module";
 
 @Module({
-	imports: [TypeOrmModule.forRoot(typeOrmConfigBase()), TypeOrmModule.forFeature([ImageEntity])],
+	imports: [
+		TypeOrmModule.forRoot(typeOrmConfigBase()),
+		TypeOrmModule.forFeature([ImageEntity]),
+		AuthModule,
+	],
 	controllers: [ImagesController],
 	providers: [ConfigService, ImageFilesRepository, ImageRecordsRepository, ImagesService],
 	exports: [],

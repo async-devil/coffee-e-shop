@@ -4,6 +4,7 @@ import { APP_GUARD } from "@nestjs/core";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 
 import config from "./config/config";
+import { AuthModule } from "./modules/auth/auth.module";
 import { ImagesModule } from "./modules/images/images.module";
 
 @Module({
@@ -17,6 +18,7 @@ import { ImagesModule } from "./modules/images/images.module";
 			limit: 100,
 		}),
 		ImagesModule,
+		AuthModule,
 	],
 	controllers: [],
 	providers: [

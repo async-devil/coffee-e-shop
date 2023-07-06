@@ -1,94 +1,133 @@
 @startuml models
 
-interface Item {
-  id : string
-  name : string
-  price : string
+left to right direction
+skinparam roundcorner 0
+skinparam linetype ortho
+
+skinparam class {
+  FontColor automatic
+  BackgroundColor #f2f2f2
+  HeaderBackgroundColor #338BA8
+  ArrowColor #1E5162
+  BorderColor #f2f2f2
 }
 
-class Product {
-  <b>id : string
-  archived : boolean
-  categories : Category[]
-  images : Image[]
-  created_at : number
-}
-Product *-- ProductTranslation
-Product *-- ProductEdition
-Product ..> Category
-Product --> Image
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define column(x) <color:#ADD8E6><&media-stop></color> x
+!define table(x) entity x << (T, white) >>
 
-class ProductTranslation {
-  <b>id: string
-  product_id : string
-  language : ISO 635-1
-  name : string
-  description : string
-  preview_description : string
-  text : string
+table(image) {
+  primary_key(id): int
+  column(name): text
+  column(url): text
+  column(created_at): timestamptz
 }
 
-class ProductEdition {
-  <b>id : string
-  product_id : string
-  name : string
-  price : number
-  available : boolean
-}
-ProductEdition ..|> Item
-
-class Image {
-  <b>name : string
-  created_at : number
+table(product) {
+  primary_key(id): int
+  foreign_key(category_id): int
+  column(archived): bool
+  column(created_at): timestamptz
 }
 
-class Category {
-  <b>id : string
-  name : string
-  created_at : number
+table(product_translation) {
+  primary_key(id): int
+  foreign_key(product_id): int
+  column(language): char
+  column(name): text
+  column(description): text
+  column(preview_description): text
+  column(text): text
 }
 
-Category *-- CategoryTranslation
-
-class CategoryTranslation {
-  <b>id: string
-  category_id : string
-  language : ISO 635-1
-  name : string
-  page_text : string
+table(product_edition) {
+  primary_key(id): int
+  foreign_key(product_id): int
+  column(name): text
+  column(price): numeric
+  column(available): bool
 }
 
-class Order {
-  <b>id : string
-  state : OrderState
-  first_name : string
-  last_name : string
-  middle_name : string
-  country : string
-  city : string
-  region : string
-  address : string
-  zip_code : string
-  email : string
-  phone_number : string
-  track_code : string
-  language : ISO 635-1
-  amount : number
-  created_at : number
+table(product_image) {
+  primary_key(id): int
+  foreign_key(product_id): int
+  foreign_key(image_id): int
 }
-Order *.. OrderItem
 
-class OrderItem {
-  <b>id: string
-  order_id : string
-  product_id : string
-  name : string
-  edition_name : string
-  price : number
-  amount : number
-  total_count : number
+table(product_tag) {
+  primary_key(id): int
+  foreign_key(product_id): int
+  foreign_key(tag_id): int
 }
-OrderItem ..|> Item
-OrderItem ..> Product
+
+table(category) {
+  primary_key(id): int
+  column(created_at): timestamptz
+}
+
+table(category_translation) {
+  primary_key(id): int
+  foreign_key(category_id): id
+  column(language): char
+  column(name): text
+  column(page_text): text
+}
+
+table(order) {
+  primary_key(id): int
+  column(state): order_state
+  column(first_name): text
+  column(last_name): text
+  column(middle_name): text
+  column(country): text
+  column(city): text
+  column(region): text
+  column(address): text
+  column(zip_code): text
+  column(email): text
+  column(phone_number): text
+  column(language): char
+  column(price): decimal
+  column(created_at): timestamptz
+}
+
+table(order_item) {
+  primary_key(id): int
+  foreign_key(order_id): int
+  foreign_key(product_id): int
+  column(name): text
+  column(edition_name): text
+  column(price): decimal
+  column(amount): int
+  column(total_price): decimal
+}
+
+table(tag) {
+  primary_key(id): int
+}
+
+table(tag_translation) {
+  primary_key(id): int
+  foreign_key(tag_id): int
+  column(name): text
+}
+
+product ||--|{ product_translation
+product ||--|{ product_edition
+product ||--|{ product_image
+product ||--|{ product_tag
+
+product_image }|--|| image
+product_tag }|--|| tag
+
+category ||--|{ category_translation
+category ||-|{ product
+
+order ||-|{ order_item
+order_item }|--|| product
+
+tag ||--|{ tag_translation
+
 
 @enduml

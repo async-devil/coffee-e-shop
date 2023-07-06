@@ -71,7 +71,7 @@ table(category_translation) {
   foreign_key(category_id): id
   column(language): char
   column(name): text
-  column(page_text): text
+  column(text): text
 }
 
 table(order) {
@@ -110,6 +110,7 @@ table(tag) {
 table(tag_translation) {
   primary_key(id): int
   foreign_key(tag_id): int
+  column(language): char
   column(name): text
 }
 

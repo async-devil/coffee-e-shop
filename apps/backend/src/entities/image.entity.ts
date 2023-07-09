@@ -1,9 +1,13 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "image" })
 export class ImageEntity {
+	/** @example 1 */
+	@PrimaryGeneratedColumn("increment")
+	public id: number;
+
 	/** @example "ethiopia-beans-1" */
-	@PrimaryColumn({ type: "text", nullable: false, unique: true })
+	@Column({ type: "text", nullable: false, unique: true })
 	public name: string;
 
 	/** @example "https://coffee-e-shop-images.s3.amazonaws.com/ethiopia-beans-1.png" */

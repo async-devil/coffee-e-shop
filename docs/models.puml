@@ -7,20 +7,21 @@ skinparam linetype ortho
 skinparam class {
   FontColor automatic
   BackgroundColor #f2f2f2
-  HeaderBackgroundColor #338BA8
-  ArrowColor #1E5162
+  HeaderBackgroundColor SteelBlue
+  ArrowColor CornflowerBlue
   BorderColor #f2f2f2
 }
 
-!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
-!define foreign_key(x) <color:#aaaaaa><&key></color> x
-!define column(x) <color:#ADD8E6><&media-stop></color> x
+!define primary_key(x) <b><color:DarkGoldenRod><&key></color> x</b>
+!define foreign_key(x) <color:Gray><&key></color> x
+!define unique_column(x) <color:IndianRed><&media-stop></color><i> x</i>
+!define column(x) <color:LightBlue><&media-stop></color> x
 !define table(x) entity x << (T, white) >>
 
 table(image) {
   primary_key(id): int
-  column(name): text
-  column(url): text
+  unique_column(name): text
+  unique_column(url): text
   column(created_at): timestamptz
 }
 
@@ -34,7 +35,7 @@ table(product) {
 table(product_translation) {
   primary_key(id): int
   foreign_key(product_id): int
-  column(language): char
+  unique_column(language): char
   column(name): text
   column(description): text
   column(preview_description): text
@@ -69,7 +70,7 @@ table(category) {
 table(category_translation) {
   primary_key(id): int
   foreign_key(category_id): id
-  column(language): char
+  unique_column(language): char
   column(name): text
   column(text): text
 }
@@ -77,18 +78,18 @@ table(category_translation) {
 table(order) {
   primary_key(id): int
   column(state): order_state
+  column(email): text
+  column(phone_number): text
   column(first_name): text
   column(last_name): text
   column(middle_name): text
-  column(country): text
-  column(city): text
-  column(region): text
-  column(address): text
-  column(zip_code): text
-  column(email): text
-  column(phone_number): text
   column(language): char
   column(price): decimal
+  column(country): text
+  column(region): text
+  column(city): text
+  column(address): text
+  column(zip_code): text
   column(created_at): timestamptz
 }
 
@@ -110,7 +111,7 @@ table(tag) {
 table(tag_translation) {
   primary_key(id): int
   foreign_key(tag_id): int
-  column(language): char
+  unique_column(language): char
   column(name): text
 }
 

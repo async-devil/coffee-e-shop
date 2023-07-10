@@ -7,6 +7,7 @@ import config from "./config/config";
 import { AuthModule } from "./modules/auth/auth.module";
 import { CategoriesModule } from "./modules/categories/categories.module";
 import { ImagesModule } from "./modules/images/images.module";
+import { ProductsModule } from "./modules/products/products.module";
 import { TagsModule } from "./modules/tags/tags.module";
 
 @Module({
@@ -23,6 +24,7 @@ import { TagsModule } from "./modules/tags/tags.module";
 		ImagesModule,
 		CategoriesModule,
 		TagsModule,
+		ProductsModule,
 	],
 	controllers: [],
 	providers: [

@@ -12,7 +12,6 @@ export class AddProductEntity1688679979107 implements MigrationInterface {
 				"archived"    boolean NOT NULL,
 				"created_at"  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
 
-				CONSTRAINT "REL_0dce9bc93c2d2c399982d04bef" UNIQUE ("category_id"),
 				CONSTRAINT "PK_bebc9158e480b949565b4dc7a82" PRIMARY KEY ("id")
 			)`
 		);

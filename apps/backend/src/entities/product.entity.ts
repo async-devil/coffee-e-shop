@@ -3,8 +3,8 @@ import {
 	CreateDateColumn,
 	Entity,
 	JoinColumn,
+	ManyToOne,
 	OneToMany,
-	OneToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
 
@@ -24,7 +24,7 @@ export class ProductEntity {
 	@Column({ type: "int" })
 	public category_id: number;
 
-	@OneToOne(() => CategoryEntity)
+	@ManyToOne(() => CategoryEntity)
 	@JoinColumn({ name: "category_id" })
 	public category: CategoryEntity;
 

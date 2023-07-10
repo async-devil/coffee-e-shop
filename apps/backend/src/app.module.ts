@@ -5,6 +5,7 @@ import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 
 import config from "./config/config";
 import { AuthModule } from "./modules/auth/auth.module";
+import { CategoriesModule } from "./modules/categories/categories.module";
 import { ImagesModule } from "./modules/images/images.module";
 
 @Module({
@@ -17,8 +18,9 @@ import { ImagesModule } from "./modules/images/images.module";
 			ttl: 60,
 			limit: 100,
 		}),
-		ImagesModule,
 		AuthModule,
+		ImagesModule,
+		CategoriesModule,
 	],
 	controllers: [],
 	providers: [

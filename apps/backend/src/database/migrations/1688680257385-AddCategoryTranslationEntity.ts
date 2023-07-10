@@ -13,7 +13,7 @@ export class AddCategoryTranslationEntity1688680257385 implements MigrationInter
 				"name"        text NOT NULL,
 				"text"        text NOT NULL,
 
-				CONSTRAINT "UQ_f89edb2f7e0d8e15a569bb70131" UNIQUE ("language")
+				CONSTRAINT "UQ_f89edb2f7e0d8e15a569bb70131" UNIQUE ("language"),
 				CONSTRAINT "PK_eeafea0891382f348c30a2a6bc2" PRIMARY KEY ("id")
 			)`
 		);

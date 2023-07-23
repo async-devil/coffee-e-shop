@@ -32,6 +32,12 @@ export class ProductsRepository extends EntityRepository<ProductEntity> {
 	}
 
 	public async getProductById(id: number) {
-		return await this.getOneWhere({ id }, { translations: true });
+		return await this.getOneWhere(
+			{ id },
+			{
+				translations: true,
+				editions: true,
+			}
+		);
 	}
 }

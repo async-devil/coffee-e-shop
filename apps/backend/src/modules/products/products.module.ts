@@ -9,6 +9,8 @@ import { ProductEntity } from "src/entities/product.entity";
 
 import { ProductEditionsController } from "./editions/product-editions.controller";
 import { ProductEditionsRepository } from "./editions/product-editions.repository";
+import { ProductImagesController } from "./images/product-images.controller";
+import { ProductImagesRepository } from "./images/product-images.repository";
 import { ProductsController } from "./products.controller";
 import { ProductsRepository } from "./products.repository";
 import { ProductsService } from "./products.service";
@@ -27,12 +29,18 @@ import { AuthModule } from "../auth/auth.module";
 		]),
 		AuthModule,
 	],
-	controllers: [ProductsController, ProductTranslationsController, ProductEditionsController],
+	controllers: [
+		ProductsController,
+		ProductTranslationsController,
+		ProductEditionsController,
+		ProductImagesController,
+	],
 	providers: [
 		ProductsService,
 		ProductsRepository,
 		ProductTranslationsRepository,
 		ProductEditionsRepository,
+		ProductImagesRepository,
 	],
 	exports: [],
 })

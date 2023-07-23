@@ -20,7 +20,7 @@ async function bootstrap() {
 	app.setGlobalPrefix("api");
 
 	app.use(helmet());
-	app.useGlobalPipes(new ValidationPipe());
+	app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
 	const document = SwaggerModule.createDocument(app, swaggerConfig);
 	SwaggerModule.setup("/api/docs", app, document);

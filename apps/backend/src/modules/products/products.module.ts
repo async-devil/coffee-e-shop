@@ -7,6 +7,8 @@ import { ProductImageEntity } from "src/entities/product-image.entity";
 import { ProductTranslationEntity } from "src/entities/product-translation.entity";
 import { ProductEntity } from "src/entities/product.entity";
 
+import { ProductEditionsController } from "./editions/product-editions.controller";
+import { ProductEditionsRepository } from "./editions/product-editions.repository";
 import { ProductsController } from "./products.controller";
 import { ProductsRepository } from "./products.repository";
 import { ProductsService } from "./products.service";
@@ -25,8 +27,13 @@ import { AuthModule } from "../auth/auth.module";
 		]),
 		AuthModule,
 	],
-	controllers: [ProductsController, ProductTranslationsController],
-	providers: [ProductsService, ProductsRepository, ProductTranslationsRepository],
+	controllers: [ProductsController, ProductTranslationsController, ProductEditionsController],
+	providers: [
+		ProductsService,
+		ProductsRepository,
+		ProductTranslationsRepository,
+		ProductEditionsRepository,
+	],
 	exports: [],
 })
 export class ProductsModule {}

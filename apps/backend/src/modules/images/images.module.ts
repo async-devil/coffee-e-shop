@@ -5,8 +5,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeOrmConfigBase } from "src/database/ormconfig";
 import { ImageEntity } from "src/entities/image.entity";
 
-import { ImageFilesRepository } from "./imageFiles.repository";
-import { ImageRecordsRepository } from "./imageRecords.repository";
+import { ImageFilesRepository } from "./image-files.repository";
+import { ImageRecordsRepository } from "./image-records.repository";
 import { ImagesController } from "./images.controller";
 import { ImagesService } from "./images.service";
 import { AuthModule } from "../auth/auth.module";

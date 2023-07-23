@@ -2,8 +2,8 @@ import { S3Client } from "@aws-sdk/client-s3";
 import { BadRequestException, Injectable } from "@nestjs/common";
 
 import { CreateImageDto } from "./dtos/create-image.dto";
-import { ImageFilesRepository } from "./imageFiles.repository";
-import { ImageRecordsRepository } from "./imageRecords.repository";
+import { ImageFilesRepository } from "./image-files.repository";
+import { ImageRecordsRepository } from "./image-records.repository";
 
 @Injectable()
 export class ImagesService {

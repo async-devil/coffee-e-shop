@@ -17,11 +17,11 @@ export class ImageRecordsRepository {
 		});
 	}
 
-	public async getRecord(name: string) {
+	public async getRecordByName(name: string) {
 		return await this.imageRepository.findOne({ where: { name } });
 	}
 
-	public async deleteRecord(name: string) {
+	public async deleteRecordByName(name: string) {
 		return await this.imageRepository.delete({ name });
 	}
 }

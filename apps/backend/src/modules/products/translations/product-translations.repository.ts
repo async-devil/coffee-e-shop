@@ -18,9 +18,7 @@ export class ProductTranslationsRepository extends EntityRepository<ProductTrans
 		super();
 	}
 
-	/**
-	 * @throws {TypeORMError}
-	 */
+	/** @throws {TypeORMError} */
 	public async create(dto: CreateProductTranslationDto) {
 		const entity = new ProductTranslationEntity();
 

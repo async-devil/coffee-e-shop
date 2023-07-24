@@ -2,52 +2,29 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { typeOrmConfigBase } from "src/database/ormconfig";
-import { ProductEditionEntity } from "src/entities/product-edition.entity";
-import { ProductImageEntity } from "src/entities/product-image.entity";
-import { ProductTagEntity } from "src/entities/product-tag.entity";
-import { ProductTranslationEntity } from "src/entities/product-translation.entity";
 import { ProductEntity } from "src/entities/product.entity";
 
-import { ProductEditionsController } from "./editions/product-editions.controller";
-import { ProductEditionsRepository } from "./editions/product-editions.repository";
-import { ProductImagesController } from "./images/product-images.controller";
-import { ProductImagesRepository } from "./images/product-images.repository";
+import { ProductEditionsModule } from "./editions/product-editions.module";
+import { ProductImagesModule } from "./images/product-images.module";
 import { ProductsController } from "./products.controller";
 import { ProductsRepository } from "./products.repository";
 import { ProductsService } from "./products.service";
-import { ProductTagsController } from "./tags/product-tags.controller";
-import { ProductTagsRepository } from "./tags/product-tags.repository";
-import { ProductTranslationsController } from "./translations/product-translations.controller";
-import { ProductTranslationsRepository } from "./translations/product-translations.repository";
+import { ProductTagsModule } from "./tags/product-tags.module";
+import { ProductTranslationsModule } from "./translations/product-translations.module";
 import { AuthModule } from "../auth/auth.module";
 
 @Module({
 	imports: [
 		TypeOrmModule.forRoot(typeOrmConfigBase()),
-		TypeOrmModule.forFeature([
-			ProductEntity,
-			ProductTranslationEntity,
-			ProductEditionEntity,
-			ProductImageEntity,
-			ProductTagEntity,
-		]),
+		TypeOrmModule.forFeature([ProductEntity]),
 		AuthModule,
+		ProductTranslationsModule,
+		ProductEditionsModule,
+		ProductImagesModule,
+		ProductTagsModule,
 	],
-	controllers: [
-		ProductsController,
-		ProductTranslationsController,
-		ProductEditionsController,
-		ProductImagesController,
-		ProductTagsController,
-	],
-	providers: [
-		ProductsService,
-		ProductsRepository,
-		ProductTranslationsRepository,
-		ProductEditionsRepository,
-		ProductImagesRepository,
-		ProductTagsRepository,
-	],
+	controllers: [ProductsController],
+	providers: [ProductsService, ProductsRepository],
 	exports: [],
 })
 export class ProductsModule {}

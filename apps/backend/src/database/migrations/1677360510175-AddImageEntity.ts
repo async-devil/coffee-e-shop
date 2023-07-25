@@ -10,6 +10,7 @@ export class AddImageEntity1677360510175 implements MigrationInterface {
 				"id"         SERIAL NOT NULL,
 				"name"       text NOT NULL,
 				"url"        text NOT NULL,
+				"is_owned"   boolean NOT NULL DEFAULT false,
 				"created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
 				
 				CONSTRAINT "UQ_e4dfc6a6f95452c9c931f5df487" UNIQUE ("name"),

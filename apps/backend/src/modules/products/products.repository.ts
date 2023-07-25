@@ -20,7 +20,7 @@ export class ProductsRepository extends EntityRepository<ProductEntity> {
 		product.category_id = 0;
 		product.archived = false;
 
-		return await this.save(product);
+		return await this.repository.save(product);
 	}
 
 	public async linkCategoryToProduct(product_id: number, category_id: number) {
@@ -28,7 +28,7 @@ export class ProductsRepository extends EntityRepository<ProductEntity> {
 
 		product.category_id = category_id;
 
-		return await this.save(product);
+		return await this.repository.save(product);
 	}
 
 	public async getProductById(id: number) {

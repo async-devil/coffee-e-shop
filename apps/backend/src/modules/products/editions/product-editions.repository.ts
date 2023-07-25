@@ -22,7 +22,7 @@ export class ProductEditionsRepository extends EntityRepository<ProductEditionEn
 	public async create(dto: CreateProductEditionDto) {
 		const entity = new ProductEditionEntity();
 
-		return await this.save(Object.assign(entity, dto));
+		return await this.repository.save(Object.assign(entity, dto));
 	}
 
 	/**
@@ -49,6 +49,6 @@ export class ProductEditionsRepository extends EntityRepository<ProductEditionEn
 
 		const updatedEntity = Object.assign(entity, dto);
 
-		return await this.save(updatedEntity);
+		return await this.repository.save(updatedEntity);
 	}
 }

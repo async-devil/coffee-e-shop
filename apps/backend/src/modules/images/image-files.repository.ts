@@ -29,11 +29,15 @@ export class ImageFilesRepository {
 		}
 	}
 
-	public getFileUrl(key: string) {
+	public getUrl(key: string) {
 		return `https://s3.${this.region}.amazonaws.com/${this.imagesBucketName}/${key}`;
 	}
 
-	public async uploadFile(buffer: Buffer, key: string) {
+	public getKey(url: string) {
+		return url.split("/").slice(3).join("/");
+	}
+
+	public async upload(buffer: Buffer, key: string) {
 		const command = new PutObjectCommand({
 			Bucket: this.imagesBucketName,
 			Body: buffer,
@@ -43,7 +47,7 @@ export class ImageFilesRepository {
 		return await this.s3Client.send(command);
 	}
 
-	public async getFile(key: string) {
+	public async get(key: string) {
 		const command = new GetObjectCommand({
 			Bucket: this.imagesBucketName,
 			Key: key,
@@ -52,7 +56,7 @@ export class ImageFilesRepository {
 		return await this.s3Client.send(command);
 	}
 
-	public async deleteFile(key: string) {
+	public async delete(key: string) {
 		const command = new DeleteObjectCommand({
 			Bucket: this.imagesBucketName,
 			Key: key,

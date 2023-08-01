@@ -2,26 +2,40 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
+import { EntityRepository } from "src/common/entity.repository";
 import { ImageEntity } from "src/entities/image.entity";
 
+import { CreateImageRecordDto } from "./dtos/create-image-record.dto";
+import { OperateImageRecordByNameDto } from "./dtos/operate-image-record-by-name.dto";
+import { UpdateImageRecordByName } from "./dtos/update-image-record-by-name.dto";
+
 @Injectable()
-export class ImageRecordsRepository {
+export class ImageRecordsRepository extends EntityRepository<ImageEntity> {
 	constructor(
-		@InjectRepository(ImageEntity) private readonly imageRepository: Repository<ImageEntity>
-	) {}
-
-	public async putRecord(name: string, url: string) {
-		return await this.imageRepository.save({
-			name,
-			url,
-		});
+		@InjectRepository(ImageEntity) protected readonly repository: Repository<ImageEntity>
+	) {
+		super();
 	}
 
-	public async getRecordByName(name: string) {
-		return await this.imageRepository.findOne({ where: { name } });
+	public async create(dto: CreateImageRecordDto) {
+		const entity = new ImageEntity();
+
+		return await this.repository.save(Object.assign(entity, dto));
 	}
 
-	public async deleteRecordByName(name: string) {
-		return await this.imageRepository.delete({ name });
+	public async getByName(dto: OperateImageRecordByNameDto) {
+		return await this.getOneWhere(dto);
+	}
+
+	public async updateByName(dto: UpdateImageRecordByName) {
+		const entity = await this.getByName({ name: dto.name });
+
+		entity.name = dto.updated_name;
+
+		return await this.repository.save(entity);
+	}
+
+	public async deleteByName(dto: OperateImageRecordByNameDto) {
+		return await this.deleteOneWhere(dto);
 	}
 }

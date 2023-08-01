@@ -19,6 +19,6 @@ import { AuthModule } from "../auth/auth.module";
 	],
 	controllers: [ImagesController],
 	providers: [ConfigService, ImageFilesRepository, ImageRecordsRepository, ImagesService],
-	exports: [],
+	exports: [ImageRecordsRepository, ImagesService],
 })
 export class ImagesModule {}

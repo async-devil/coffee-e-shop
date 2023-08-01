@@ -1,20 +1,41 @@
-import { Body, Controller, Post, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+	UploadedFile,
+	UseFilters,
+	UseGuards,
+	UseInterceptors,
+} from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiConsumes, ApiTags } from "@nestjs/swagger";
 
+import { TypeORMErrorFilter } from "src/common/typeorm-error.filter";
 import { AccessTokenGuard } from "src/guards/access-token.guard";
 
-import { AddImageLinkDto } from "./dtos/add-image-link.dto";
+import { UploadImageRecordDto } from "./dtos/create-image-record.dto";
 import { CreateImageDto } from "./dtos/create-image.dto";
+import { OperateImageRecordByNameDto } from "./dtos/operate-image-record-by-name.dto";
+import { UpdateImageRecordByNameBodyDto } from "./dtos/update-image-record-by-name.dto";
+import { ImageRecordsRepository } from "./image-records.repository";
 import { ImagesService } from "./images.service";
 
 @ApiTags("images")
 @Controller("images")
+@UseFilters(TypeORMErrorFilter)
 export class ImagesController {
-	constructor(private readonly imagesService: ImagesService) {}
+	constructor(
+		private readonly imagesService: ImagesService,
+		private readonly imageRecordsRepository: ImageRecordsRepository
+	) {}
 
 	@ApiBearerAuth()
-	@Post("/upload")
+	@ApiConsumes("multipart/form-data")
+	@Post("/")
 	@UseGuards(AccessTokenGuard)
 	@UseInterceptors(FileInterceptor("file"))
 	public async uploadImage(@UploadedFile() file: Express.Multer.File, @Body() dto: CreateImageDto) {
@@ -22,9 +43,31 @@ export class ImagesController {
 	}
 
 	@ApiBearerAuth()
-	@Post("/add")
+	@Post("/records")
 	@UseGuards(AccessTokenGuard)
-	public async addImageLink(@Body() dto: AddImageLinkDto) {
-		return await this.imagesService.addImageLink(dto.name, dto.url);
+	public async uploadImageRecord(@Body() dto: UploadImageRecordDto) {
+		return await this.imageRecordsRepository.create(dto);
+	}
+
+	@Get("/records/:name")
+	public async getImageRecordByName(@Param() params: OperateImageRecordByNameDto) {
+		return await this.imageRecordsRepository.getByName(params);
+	}
+
+	@ApiBearerAuth()
+	@Put("/records/:name")
+	@UseGuards(AccessTokenGuard)
+	public async updateImageRecordByName(
+		@Param() params: OperateImageRecordByNameDto,
+		@Body() body: UpdateImageRecordByNameBodyDto
+	) {
+		return await this.imageRecordsRepository.updateByName(Object.assign(body, params));
+	}
+
+	@ApiBearerAuth()
+	@Delete("/records/:name")
+	@UseGuards(AccessTokenGuard)
+	public async deleteImageRecordByName(@Param() params: OperateImageRecordByNameDto) {
+		return await this.imagesService.deleteImage(params);
 	}
 }

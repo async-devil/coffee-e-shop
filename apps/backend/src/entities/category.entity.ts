@@ -10,6 +10,7 @@ export class CategoryEntity {
 	@CreateDateColumn({
 		type: "timestamp with time zone",
 		default: () => "CURRENT_TIMESTAMP",
+		name: "created_at",
 	})
-	public created_at: Date;
+	public createdAt: Date;
 }

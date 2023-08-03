@@ -33,7 +33,7 @@ export class ProductTranslationsController {
 	constructor(private readonly repository: ProductTranslationsRepository) {}
 
 	@ApiBearerAuth()
-	@Post("/:product_id/translations/:language")
+	@Post("/:productId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async createProductTranslation(
 		@Param() params: CreateProductTranslationParamsDto,
@@ -44,7 +44,7 @@ export class ProductTranslationsController {
 		return await this.repository.create(entityData);
 	}
 
-	@Get("/:product_id/translations/:language")
+	@Get("/:productId/translations/:language")
 	public async getProductTranslationByLanguage(
 		@Param() params: GetProductTranslationByLanguageDto
 	) {
@@ -52,7 +52,7 @@ export class ProductTranslationsController {
 	}
 
 	@ApiBearerAuth()
-	@Put("/:product_id/translations/:language")
+	@Put("/:productId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async updateProductTranslationByLanguage(
 		@Param() params: UpdateProductTranslationByLanguageParamsDto,
@@ -64,7 +64,7 @@ export class ProductTranslationsController {
 	}
 
 	@ApiBearerAuth()
-	@Delete("/:product_id/translations/:language")
+	@Delete("/:productId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async deleteProductTranslationByLanguage(
 		@Param() params: DeleteProductTranslationByLanguageDto

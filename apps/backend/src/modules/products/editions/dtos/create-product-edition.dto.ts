@@ -5,7 +5,7 @@ export class CreateProductEditionDto {
 	/** @example 1 */
 	@IsNumberString()
 	@ApiProperty({ example: 1 })
-	public product_id: number;
+	public productId: number;
 
 	/** @example "250g" */
 	@IsString()
@@ -23,10 +23,8 @@ export class CreateProductEditionDto {
 	public available: boolean;
 }
 
-export class CreateProductEditionBodyDto extends OmitType(CreateProductEditionDto, [
-	"product_id",
-]) {}
+export class CreateProductEditionBodyDto extends OmitType(CreateProductEditionDto, ["productId"]) {}
 
 export class CreateProductEditionParamsDto extends PickType(CreateProductEditionDto, [
-	"product_id",
+	"productId",
 ]) {}

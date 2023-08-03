@@ -8,8 +8,8 @@ export class CategoryTranslationEntity {
 	@PrimaryGeneratedColumn("increment")
 	public id: number;
 
-	@Column({ type: "int" })
-	public category_id: number;
+	@Column({ type: "int", name: "category_id", unsigned: true })
+	public categoryId: number;
 
 	@ManyToOne(() => CategoryEntity)
 	@JoinColumn({ name: "category_id" })

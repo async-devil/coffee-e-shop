@@ -27,20 +27,20 @@ export class OrderEntity {
 	public email: string;
 
 	/** @example "+380631234567" */
-	@Column({ type: "text" })
-	public phone_number: string;
+	@Column({ type: "text", name: "phone_number" })
+	public phoneNumber: string;
 
 	/** @example "John" */
-	@Column({ type: "text" })
-	public first_name: string;
+	@Column({ type: "text", name: "first_name" })
+	public firstName: string;
 
 	/** @example "Doe" */
-	@Column({ type: "text" })
-	public last_name: string;
+	@Column({ type: "text", name: "last_name" })
+	public lastName: string;
 
 	/** @example "Johnson" */
-	@Column({ type: "text" })
-	public middle_name: string;
+	@Column({ type: "text", name: "middle_name" })
+	public middleName: string;
 
 	/** ISO 639-1 @example "uk" */
 	@Column({ type: "char", length: 2 })
@@ -67,13 +67,14 @@ export class OrderEntity {
 	public address: string;
 
 	/** @example "79000" */
-	@Column({ type: "text" })
-	public zip_code: string;
+	@Column({ type: "text", name: "zip_code" })
+	public zipCode: string;
 
 	/** @example "2023-02-22T20:48:40.253Z" */
 	@CreateDateColumn({
 		type: "timestamp with time zone",
 		default: () => "CURRENT_TIMESTAMP",
+		name: "created_at",
 	})
-	public created_at: Date;
+	public createdAt: Date;
 }

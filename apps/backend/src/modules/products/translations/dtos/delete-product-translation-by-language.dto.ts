@@ -7,7 +7,7 @@ export class DeleteProductTranslationByLanguageDto {
 	/** @example 1 */
 	@IsNumberString()
 	@ApiProperty({ example: 1 })
-	public product_id: number;
+	public productId: number;
 
 	/** ISO 639-1 @example "en" */
 	@IsISO639Alpha2()

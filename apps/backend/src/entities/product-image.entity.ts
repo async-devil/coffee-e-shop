@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
 import { ImageEntity } from "./image.entity";
 import { ProductEntity } from "./product.entity";
@@ -6,20 +6,16 @@ import { ProductEntity } from "./product.entity";
 @Entity({ name: "product_image" })
 export class ProductImageEntity {
 	/** @example 1 */
-	@PrimaryGeneratedColumn("increment")
-	public id: number;
-
-	/** @example 1 */
-	@Column({ type: "int" })
-	public product_id: number;
+	@PrimaryColumn({ type: "int", name: "product_id", unsigned: true })
+	public productId: number;
 
 	@ManyToOne(() => ProductEntity, (product) => product.images)
 	@JoinColumn({ name: "product_id" })
 	public product: ProductEntity;
 
 	/** @example 1 */
-	@Column({ type: "int" })
-	public image_id: number;
+	@PrimaryColumn({ type: "int", name: "image_id", unsigned: true })
+	public imageId: number;
 
 	@ManyToOne(() => ImageEntity)
 	@JoinColumn({ name: "image_id" })

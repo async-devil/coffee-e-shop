@@ -9,8 +9,8 @@ export class ProductEditionEntity {
 	public id: number;
 
 	/** @example 1 */
-	@Column({ type: "int" })
-	public product_id: number;
+	@Column({ type: "int", name: "product_id", unsigned: true })
+	public productId: number;
 
 	@ManyToOne(() => ProductEntity, (product) => product.editions)
 	@JoinColumn({ name: "product_id" })

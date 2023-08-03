@@ -9,8 +9,8 @@ export class TagTranslationEntity {
 	public id: number;
 
 	/** @example 1 */
-	@Column({ type: "int" })
-	public tag_id: number;
+	@Column({ type: "int", name: "tag_id", unsigned: true })
+	public tagId: number;
 
 	@ManyToOne(() => TagEntity, (tag) => tag.translations)
 	@JoinColumn({ name: "tag_id" })

@@ -7,7 +7,7 @@ export class UpdateImageRecordByName extends OperateImageRecordByNameDto {
 	/** @example "ethiopia-beans-1" */
 	@IsString()
 	@ApiProperty({ example: "ethiopia-beans-1" })
-	public updated_name: string;
+	public updatedName: string;
 }
 
 export class UpdateImageRecordByNameBodyDto extends OmitType(UpdateImageRecordByName, ["name"]) {}

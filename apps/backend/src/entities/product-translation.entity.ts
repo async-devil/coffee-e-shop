@@ -9,8 +9,8 @@ export class ProductTranslationEntity {
 	public id: number;
 
 	/** @example 1 */
-	@Column({ type: "int" })
-	public product_id: number;
+	@Column({ type: "int", name: "product_id", unsigned: true })
+	public productId: number;
 
 	@ManyToOne(() => ProductEntity, (product) => product.translations)
 	@JoinColumn({ name: "product_id" })
@@ -29,8 +29,8 @@ export class ProductTranslationEntity {
 	public description: string;
 
 	/** @example "coffee-beans" */
-	@Column({ type: "text" })
-	public preview_description: string;
+	@Column({ type: "text", name: "preview_description" })
+	public previewDescription: string;
 
 	/** @example "this is coffee" */
 	@Column({ type: "text" })

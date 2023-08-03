@@ -7,12 +7,19 @@ export class AddProductImageEntity1688730586667 implements MigrationInterface {
 		await queryRunner.query(
 			`--sql
 			CREATE TABLE "product_image" (
-				"id"         SERIAL NOT NULL,
 				"product_id" integer NOT NULL,
 				"image_id"   integer NOT NULL,
 
-				CONSTRAINT "PK_99d98a80f57857d51b5f63c8240" PRIMARY KEY ("id")
+				CONSTRAINT "PK_4eb46245c9049493d4381daa806" PRIMARY KEY ("product_id", "image_id")
 			)`
+		);
+
+		await queryRunner.query(
+			`CREATE INDEX "IDX_dbc7d9aa7ed42c9141b968a9ed" ON "product_image" ("product_id")`
+		);
+
+		await queryRunner.query(
+			`CREATE INDEX "IDX_d51e7dc05190034e8c9c647669" ON "product_image" ("image_id")`
 		);
 
 		await queryRunner.query(
@@ -34,12 +41,16 @@ export class AddProductImageEntity1688730586667 implements MigrationInterface {
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query(
-			`ALTER TABLE "product_image" DROP CONSTRAINT "FK_dbc7d9aa7ed42c9141b968a9ed3"`
+			`ALTER TABLE "product_image" DROP CONSTRAINT "FK_d51e7dc05190034e8c9c6476699"`
 		);
 
 		await queryRunner.query(
-			`ALTER TABLE "product_image" DROP CONSTRAINT "FK_d51e7dc05190034e8c9c6476699"`
+			`ALTER TABLE "product_image" DROP CONSTRAINT "FK_dbc7d9aa7ed42c9141b968a9ed3"`
 		);
+
+		await queryRunner.query(`DROP INDEX "public"."IDX_d51e7dc05190034e8c9c647669"`);
+
+		await queryRunner.query(`DROP INDEX "public"."IDX_dbc7d9aa7ed42c9141b968a9ed"`);
 
 		await queryRunner.query(`DROP TABLE "product_image"`);
 	}

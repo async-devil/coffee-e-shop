@@ -3,16 +3,19 @@ import {
 	CreateDateColumn,
 	Entity,
 	JoinColumn,
+	JoinTable,
+	ManyToMany,
 	ManyToOne,
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
 
 import { CategoryEntity } from "./category.entity";
+import { ImageEntity } from "./image.entity";
 import { ProductEditionEntity } from "./product-edition.entity";
-import { ProductImageEntity } from "./product-image.entity";
 import { ProductTagEntity } from "./product-tag.entity";
 import { ProductTranslationEntity } from "./product-translation.entity";
+import { TagEntity } from "./tag.entity";
 
 @Entity({ name: "product" })
 export class ProductEntity {
@@ -21,8 +24,8 @@ export class ProductEntity {
 	public id: number;
 
 	/** @example 1 */
-	@Column({ type: "int" })
-	public category_id: number;
+	@Column({ type: "int", name: "category_id", unsigned: true })
+	public categoryId: number;
 
 	@ManyToOne(() => CategoryEntity)
 	@JoinColumn({ name: "category_id" })
@@ -31,13 +34,23 @@ export class ProductEntity {
 	@OneToMany(() => ProductEditionEntity, (productEdition) => productEdition.product)
 	public editions: ProductEditionEntity[];
 
-	@OneToMany(() => ProductImageEntity, (productImage) => productImage.product)
-	public images: ProductImageEntity[];
+	@ManyToMany(() => ImageEntity, { eager: true })
+	@JoinTable({
+		name: "product_image",
+		joinColumn: { name: "product_id", referencedColumnName: "id" },
+		inverseJoinColumn: { name: "image_id", referencedColumnName: "id" },
+	})
+	public images: ImageEntity[];
 
 	@OneToMany(() => ProductTranslationEntity, (productTranslation) => productTranslation.product)
 	public translations: ProductTranslationEntity[];
 
-	@OneToMany(() => ProductTagEntity, (productTag) => productTag.product)
+	@ManyToMany(() => TagEntity, { eager: true })
+	@JoinTable({
+		name: "product_tag",
+		joinColumn: { name: "product_id", referencedColumnName: "id" },
+		inverseJoinColumn: { name: "tag_id", referencedColumnName: "id" },
+	})
 	public tags: ProductTagEntity[];
 
 	/** @example false */
@@ -48,6 +61,7 @@ export class ProductEntity {
 	@CreateDateColumn({
 		type: "timestamp with time zone",
 		default: () => "CURRENT_TIMESTAMP",
+		name: "created_at",
 	})
-	public created_at: Date;
+	public createdAt: Date;
 }

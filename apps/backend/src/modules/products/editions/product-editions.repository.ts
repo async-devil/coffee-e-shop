@@ -40,12 +40,12 @@ export class ProductEditionsRepository extends EntityRepository<ProductEditionEn
 	 */
 	public async updateById(dto: UpdateProductEditionByIdDto) {
 		const entity = await this.getById({
-			product_id: dto.product_id,
+			productId: dto.productId,
 			id: dto.id,
 		});
 
 		// only updates if id is the same, does not work on the string equivalent
-		dto.id = parseInt(String(dto.id));
+		dto.id = entity.id;
 
 		const updatedEntity = Object.assign(entity, dto);
 

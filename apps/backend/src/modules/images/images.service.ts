@@ -40,7 +40,7 @@ export class ImagesService {
 			await this.recordsRepository.create({
 				name: dto.name,
 				url: this.filesRepository.getUrl(key),
-				is_owned: true,
+				isOwned: true,
 			});
 		} catch (err) {
 			await this.filesRepository.delete(key);
@@ -52,7 +52,7 @@ export class ImagesService {
 	public async deleteImage(dto: OperateImageRecordByNameDto) {
 		const image = await this.recordsRepository.getByName(dto);
 
-		if (image.is_owned) {
+		if (image.isOwned) {
 			const key = this.filesRepository.getKey(image.url);
 
 			await this.filesRepository.delete(key);

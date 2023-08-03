@@ -40,7 +40,7 @@ export class ProductTranslationsRepository extends EntityRepository<ProductTrans
 	 */
 	public async updateByLanguage(dto: UpdateProductTranslationByLanguageDto) {
 		const entity = await this.getByLanguage({
-			product_id: dto.product_id,
+			productId: dto.productId,
 			language: dto.language,
 		});
 

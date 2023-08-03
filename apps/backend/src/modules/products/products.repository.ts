@@ -17,16 +17,16 @@ export class ProductsRepository extends EntityRepository<ProductEntity> {
 	public async createProduct() {
 		const product = new ProductEntity();
 
-		product.category_id = 0;
+		product.categoryId = 0;
 		product.archived = false;
 
 		return await this.repository.save(product);
 	}
 
-	public async linkCategoryToProduct(product_id: number, category_id: number) {
-		const product = await this.getProductById(product_id);
+	public async linkCategoryToProduct(productId: number, categoryId: number) {
+		const product = await this.getProductById(productId);
 
-		product.category_id = category_id;
+		product.categoryId = categoryId;
 
 		return await this.repository.save(product);
 	}
@@ -37,6 +37,7 @@ export class ProductsRepository extends EntityRepository<ProductEntity> {
 			{
 				translations: true,
 				editions: true,
+				images: true,
 			}
 		);
 	}

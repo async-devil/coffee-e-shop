@@ -7,7 +7,7 @@ export class CreateProductTranslationDto {
 	/** @example 1 */
 	@IsNumberString()
 	@ApiProperty({ example: 1 })
-	public product_id: number;
+	public productId: number;
 
 	/** ISO 639-1 @example "en" */
 	@IsISO639Alpha2()
@@ -27,7 +27,7 @@ export class CreateProductTranslationDto {
 	/** @example "coffee-beans" */
 	@IsString()
 	@ApiProperty({ example: "coffee-beans" })
-	public preview_description: string;
+	public previewDescription: string;
 
 	/** @example "this is coffee" */
 	@IsString()
@@ -36,11 +36,11 @@ export class CreateProductTranslationDto {
 }
 
 export class CreateProductTranslationBodyDto extends OmitType(CreateProductTranslationDto, [
-	"product_id",
+	"productId",
 	"language",
 ]) {}
 
 export class CreateProductTranslationParamsDto extends PickType(CreateProductTranslationDto, [
-	"product_id",
+	"productId",
 	"language",
 ]) {}

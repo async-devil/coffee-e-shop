@@ -30,7 +30,7 @@ export class ImageRecordsRepository extends EntityRepository<ImageEntity> {
 	public async updateByName(dto: UpdateImageRecordByName) {
 		const entity = await this.getByName({ name: dto.name });
 
-		entity.name = dto.updated_name;
+		entity.name = dto.updatedName;
 
 		return await this.repository.save(entity);
 	}

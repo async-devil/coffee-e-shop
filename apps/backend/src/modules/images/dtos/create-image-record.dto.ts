@@ -16,7 +16,7 @@ export class CreateImageRecordDto {
 	@IsBoolean()
 	@IsOptional()
 	@ApiProperty({ example: true })
-	public is_owned?: boolean;
+	public isOwned?: boolean;
 }
 
-export class UploadImageRecordDto extends OmitType(CreateImageRecordDto, ["is_owned"]) {}
+export class UploadImageRecordDto extends OmitType(CreateImageRecordDto, ["isOwned"]) {}

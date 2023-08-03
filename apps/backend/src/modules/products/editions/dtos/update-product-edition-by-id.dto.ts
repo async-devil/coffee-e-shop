@@ -5,7 +5,7 @@ export class UpdateProductEditionByIdDto {
 	/** @example 1 */
 	@IsNumberString()
 	@ApiProperty({ example: 1 })
-	public product_id: number;
+	public productId: number;
 
 	/** @example 2 */
 	@IsNumberString()
@@ -32,11 +32,11 @@ export class UpdateProductEditionByIdDto {
 }
 
 export class UpdateProductEditionByIdBodyDto extends OmitType(UpdateProductEditionByIdDto, [
-	"product_id",
+	"productId",
 	"id",
 ]) {}
 
 export class UpdateProductEditionByIdParamsDto extends PickType(UpdateProductEditionByIdDto, [
-	"product_id",
+	"productId",
 	"id",
 ]) {}

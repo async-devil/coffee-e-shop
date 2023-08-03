@@ -33,7 +33,7 @@ export class ProductEditionsController {
 	constructor(private readonly repository: ProductEditionsRepository) {}
 
 	@ApiBearerAuth()
-	@Post("/:product_id/editions")
+	@Post("/:productId/editions")
 	@UseGuards(AccessTokenGuard)
 	public async createProductEdition(
 		@Param() params: CreateProductEditionParamsDto,
@@ -44,13 +44,13 @@ export class ProductEditionsController {
 		return await this.repository.create(dto);
 	}
 
-	@Get("/:product_id/editions/:id")
+	@Get("/:productId/editions/:id")
 	public async getProductEditionById(@Param() params: GetProductEditionByIdDto) {
 		return await this.repository.getById(params);
 	}
 
 	@ApiBearerAuth()
-	@Put("/:product_id/editions/:id")
+	@Put("/:productId/editions/:id")
 	@UseGuards(AccessTokenGuard)
 	public async updateProductEditionById(
 		@Param() params: UpdateProductEditionByIdParamsDto,
@@ -62,7 +62,7 @@ export class ProductEditionsController {
 	}
 
 	@ApiBearerAuth()
-	@Delete("/:product_id/editions/:id")
+	@Delete("/:productId/editions/:id")
 	@UseGuards(AccessTokenGuard)
 	public async deleteProductEditionById(@Param() params: DeleteProductEditionByIdDto) {
 		return await this.repository.deleteOneWhere(params);

@@ -18,13 +18,14 @@ export class ImageEntity {
 	 * Shows if the image is hosted on CDN or only a record
 	 * @example true
 	 */
-	@Column({ type: "bool", default: false })
-	public is_owned: boolean;
+	@Column({ type: "bool", name: "is_owned", default: false })
+	public isOwned: boolean;
 
 	/** @example "2023-02-22T20:48:40.253Z" */
 	@CreateDateColumn({
 		type: "timestamp with time zone",
 		default: () => "CURRENT_TIMESTAMP",
+		name: "created_at",
 	})
-	public created_at: Date;
+	public createdAt: Date;
 }

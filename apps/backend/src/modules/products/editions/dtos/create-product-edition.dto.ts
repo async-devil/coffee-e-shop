@@ -1,5 +1,5 @@
 import { ApiProperty, OmitType, PickType } from "@nestjs/swagger";
-import { IsBoolean, IsNumber, IsNumberString, IsString } from "class-validator";
+import { IsBoolean, IsNumber, IsNumberString, IsOptional, IsString } from "class-validator";
 
 export class CreateProductEditionDto {
 	/** @example 1 */
@@ -19,8 +19,9 @@ export class CreateProductEditionDto {
 
 	/** @example true */
 	@IsBoolean()
-	@ApiProperty({ example: true })
-	public available: boolean;
+	@IsOptional()
+	@ApiProperty({ required: false, example: true, default: true })
+	public available?: boolean;
 }
 
 export class CreateProductEditionBodyDto extends OmitType(CreateProductEditionDto, ["productId"]) {}

@@ -1,8 +1,10 @@
-import { Controller, UseFilters } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { Controller, Delete, Get, Param, Post, UseFilters, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 import { TypeORMErrorFilter } from "src/common/typeorm-error.filter";
+import { AccessTokenGuard } from "src/guards/access-token.guard";
 
+import { OperateTagDto } from "./operate-tag.dto";
 import { TagsRepository } from "./tags.repository";
 
 @ApiTags("tags")
@@ -10,4 +12,23 @@ import { TagsRepository } from "./tags.repository";
 @UseFilters(TypeORMErrorFilter)
 export class TagsController {
 	constructor(private readonly repository: TagsRepository) {}
+
+	@ApiBearerAuth()
+	@Post("/")
+	@UseGuards(AccessTokenGuard)
+	public async createTag() {
+		return await this.repository.create();
+	}
+
+	@Get("/:id")
+	public async getById(@Param() params: OperateTagDto) {
+		return await this.repository.getById(params);
+	}
+
+	@ApiBearerAuth()
+	@Delete("/:id")
+	@UseGuards(AccessTokenGuard)
+	public async deleteById(@Param() params: OperateTagDto) {
+		return await this.repository.deleteOneWhere(params);
+	}
 }

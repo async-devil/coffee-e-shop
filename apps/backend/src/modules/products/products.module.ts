@@ -8,7 +8,6 @@ import { ProductEditionsModule } from "./editions/product-editions.module";
 import { ProductImagesModule } from "./images/product-images.module";
 import { ProductsController } from "./products.controller";
 import { ProductsRepository } from "./products.repository";
-import { ProductsService } from "./products.service";
 import { ProductTagsModule } from "./tags/product-tags.module";
 import { ProductTranslationsModule } from "./translations/product-translations.module";
 import { AuthModule } from "../auth/auth.module";
@@ -24,7 +23,7 @@ import { AuthModule } from "../auth/auth.module";
 		ProductTagsModule,
 	],
 	controllers: [ProductsController],
-	providers: [ProductsService, ProductsRepository],
+	providers: [ProductsRepository],
 	exports: [],
 })
 export class ProductsModule {}

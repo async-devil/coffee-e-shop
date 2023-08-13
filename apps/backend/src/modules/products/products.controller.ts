@@ -1,9 +1,10 @@
-import { Controller, Get, Param, Post, UseFilters, UseGuards } from "@nestjs/common";
+import { Controller, Delete, Get, Param, Post, UseFilters, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 import { TypeORMErrorFilter } from "src/common/typeorm-error.filter";
 import { AccessTokenGuard } from "src/guards/access-token.guard";
 
+import { OperateProductDto } from "./operate-product.dto";
 import { ProductsRepository } from "./products.repository";
 
 @ApiTags("products")
@@ -20,7 +21,14 @@ export class ProductsController {
 	}
 
 	@Get("/:id")
-	public async getProductById(@Param("id") id: number) {
-		return await this.productsService.getProductById(id);
+	public async getProductById(@Param() params: OperateProductDto) {
+		return await this.productsService.getProductById(params);
+	}
+
+	@ApiBearerAuth()
+	@Delete("/:id")
+	@UseGuards(AccessTokenGuard)
+	public async deleteProductById(@Param() params: OperateProductDto) {
+		return await this.productsService.deleteOneWhere(params);
 	}
 }

@@ -5,7 +5,7 @@ import { typeOrmConfigBase } from "src/database/ormconfig";
 import { TagEntity } from "src/entities/tag.entity";
 
 import { TagsController } from "./tags.controller";
-import { TagsService } from "./tags.service";
+import { TagsRepository } from "./tags.repository";
 import { AuthModule } from "../auth/auth.module";
 
 @Module({
@@ -15,7 +15,7 @@ import { AuthModule } from "../auth/auth.module";
 		AuthModule,
 	],
 	controllers: [TagsController],
-	providers: [TagsService],
-	exports: [],
+	providers: [TagsRepository],
+	exports: [TagsRepository],
 })
 export class TagsModule {}

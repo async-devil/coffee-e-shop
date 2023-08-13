@@ -1,8 +1,13 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 
-import { TagsService } from "./tags.service";
+import { TypeORMErrorFilter } from "src/common/typeorm-error.filter";
 
+import { TagsRepository } from "./tags.repository";
+
+@ApiTags("tags")
 @Controller("tags")
+@UseFilters(TypeORMErrorFilter)
 export class TagsController {
-	constructor(private readonly tagsService: TagsService) {}
+	constructor(private readonly repository: TagsRepository) {}
 }

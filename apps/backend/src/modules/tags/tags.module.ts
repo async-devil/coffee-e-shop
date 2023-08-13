@@ -6,6 +6,7 @@ import { TagEntity } from "src/entities/tag.entity";
 
 import { TagsController } from "./tags.controller";
 import { TagsRepository } from "./tags.repository";
+import { TagTranslationsModule } from "./translations/tag-translations.module";
 import { AuthModule } from "../auth/auth.module";
 
 @Module({
@@ -13,6 +14,7 @@ import { AuthModule } from "../auth/auth.module";
 		TypeOrmModule.forRoot(typeOrmConfigBase()),
 		TypeOrmModule.forFeature([TagEntity]),
 		AuthModule,
+		TagTranslationsModule,
 	],
 	controllers: [TagsController],
 	providers: [TagsRepository],

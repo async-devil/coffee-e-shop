@@ -11,7 +11,7 @@ export class CategoryTranslationEntity {
 	@Column({ type: "int", name: "category_id", unsigned: true })
 	public categoryId: number;
 
-	@ManyToOne(() => CategoryEntity)
+	@ManyToOne(() => CategoryEntity, { onDelete: "CASCADE" })
 	@JoinColumn({ name: "category_id" })
 	public category: CategoryEntity;
 

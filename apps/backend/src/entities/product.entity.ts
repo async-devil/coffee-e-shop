@@ -24,17 +24,20 @@ export class ProductEntity {
 	public id: number;
 
 	/** @example 1 */
-	@Column({ type: "int", name: "category_id", unsigned: true })
-	public categoryId: number;
+	@Column({ type: "int", name: "category_id", unsigned: true, nullable: true })
+	public categoryId: number | null;
 
-	@ManyToOne(() => CategoryEntity)
+	@ManyToOne(() => CategoryEntity, { onDelete: "SET NULL" })
 	@JoinColumn({ name: "category_id" })
 	public category: CategoryEntity;
 
 	@OneToMany(() => ProductEditionEntity, (productEdition) => productEdition.product)
 	public editions: ProductEditionEntity[];
 
-	@ManyToMany(() => ImageEntity, { eager: true })
+	@OneToMany(() => ProductTranslationEntity, (productTranslation) => productTranslation.product)
+	public translations: ProductTranslationEntity[];
+
+	@ManyToMany(() => ImageEntity, { eager: true, cascade: true })
 	@JoinTable({
 		name: "product_image",
 		joinColumn: { name: "product_id", referencedColumnName: "id" },
@@ -42,10 +45,7 @@ export class ProductEntity {
 	})
 	public images: ImageEntity[];
 
-	@OneToMany(() => ProductTranslationEntity, (productTranslation) => productTranslation.product)
-	public translations: ProductTranslationEntity[];
-
-	@ManyToMany(() => TagEntity, { eager: true })
+	@ManyToMany(() => TagEntity, { eager: true, cascade: true })
 	@JoinTable({
 		name: "product_tag",
 		joinColumn: { name: "product_id", referencedColumnName: "id" },
@@ -54,7 +54,7 @@ export class ProductEntity {
 	public tags: ProductTagEntity[];
 
 	/** @example false */
-	@Column({ type: "bool" })
+	@Column({ type: "bool", default: false })
 	public archived: boolean;
 
 	/** @example "2023-02-22T20:48:40.253Z" */

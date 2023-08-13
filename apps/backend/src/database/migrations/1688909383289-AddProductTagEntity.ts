@@ -26,7 +26,7 @@ export class AddProductTagEntity1688909383289 implements MigrationInterface {
 			`--sql
 			ALTER TABLE "product_tag"
 				ADD CONSTRAINT "FK_d08cb260c60a9bf0a5e0424768d" FOREIGN KEY ("product_id")
-				REFERENCES "product"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+				REFERENCES "product"("id") ON DELETE CASCADE ON UPDATE NO ACTION
 			`
 		);
 
@@ -34,7 +34,7 @@ export class AddProductTagEntity1688909383289 implements MigrationInterface {
 			`--sql
 			ALTER TABLE "product_tag"
 				ADD CONSTRAINT "FK_7bf0b673c19b33c9456d54b2b37" FOREIGN KEY ("tag_id")
-				REFERENCES "tag"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+				REFERENCES "tag"("id") ON DELETE CASCADE ON UPDATE NO ACTION
 			`
 		);
 	}

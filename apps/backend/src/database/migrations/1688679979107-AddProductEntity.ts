@@ -8,8 +8,8 @@ export class AddProductEntity1688679979107 implements MigrationInterface {
 			`--sql
 			CREATE TABLE "product" (
 				"id"          SERIAL NOT NULL,
-				"category_id" integer NOT NULL,
-				"archived"    boolean NOT NULL,
+				"category_id" integer,
+				"archived"    boolean NOT NULL DEFAULT false,
 				"created_at"  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
 
 				CONSTRAINT "PK_bebc9158e480b949565b4dc7a82" PRIMARY KEY ("id")
@@ -20,7 +20,7 @@ export class AddProductEntity1688679979107 implements MigrationInterface {
 			`--sql
 			ALTER TABLE "product"
 				ADD CONSTRAINT "FK_0dce9bc93c2d2c399982d04bef1" FOREIGN KEY ("category_id")
-				REFERENCES "category"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+				REFERENCES "category"("id") ON DELETE SET NULL ON UPDATE NO ACTION
 			`
 		);
 	}

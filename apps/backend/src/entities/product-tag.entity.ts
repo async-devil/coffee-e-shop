@@ -9,7 +9,7 @@ export class ProductTagEntity {
 	@PrimaryColumn({ type: "int", name: "product_id", unsigned: true })
 	public productId: number;
 
-	@ManyToOne(() => ProductEntity, (product) => product.tags)
+	@ManyToOne(() => ProductEntity, (product) => product.tags, { onDelete: "CASCADE" })
 	@JoinColumn({ name: "product_id" })
 	public product: ProductEntity;
 
@@ -17,7 +17,7 @@ export class ProductTagEntity {
 	@PrimaryColumn({ type: "int", name: "tag_id", unsigned: true })
 	public tagId: number;
 
-	@ManyToOne(() => TagEntity)
+	@ManyToOne(() => TagEntity, { onDelete: "CASCADE" })
 	@JoinColumn({ name: "tag_id" })
 	public tag: TagEntity;
 }

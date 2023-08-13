@@ -13,7 +13,7 @@ export class OrderItemEntity {
 	@Column({ type: "int", name: "order_id", unsigned: true })
 	public orderId: number;
 
-	@ManyToOne(() => OrderEntity)
+	@ManyToOne(() => OrderEntity, { onDelete: "CASCADE" })
 	@JoinColumn({ name: "order_id" })
 	public order: OrderEntity;
 

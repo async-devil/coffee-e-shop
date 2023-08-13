@@ -24,7 +24,7 @@ export class AddOrderItemEntity1688940137547 implements MigrationInterface {
 			`--sql
 			ALTER TABLE "order_item"
 				ADD CONSTRAINT "FK_e9674a6053adbaa1057848cddfa" FOREIGN KEY ("order_id")
-				REFERENCES "order"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+				REFERENCES "order"("id") ON DELETE CASCADE ON UPDATE NO ACTION
 			`
 		);
 

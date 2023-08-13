@@ -12,7 +12,7 @@ export class TagTranslationEntity {
 	@Column({ type: "int", name: "tag_id", unsigned: true })
 	public tagId: number;
 
-	@ManyToOne(() => TagEntity, (tag) => tag.translations)
+	@ManyToOne(() => TagEntity, (tag) => tag.translations, { onDelete: "CASCADE" })
 	@JoinColumn({ name: "tag_id" })
 	public tag: TagEntity;
 

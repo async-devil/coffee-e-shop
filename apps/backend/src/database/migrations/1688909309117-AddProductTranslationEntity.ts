@@ -24,7 +24,7 @@ export class AddProductTranslationEntity1688909309117 implements MigrationInterf
 			`--sql
 			ALTER TABLE "product_translation"
 				ADD CONSTRAINT "FK_045befe4da0d3c207a981f4e88b" FOREIGN KEY ("product_id")
-				REFERENCES "product"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+				REFERENCES "product"("id") ON DELETE CASCADE ON UPDATE NO ACTION
 			`
 		);
 	}

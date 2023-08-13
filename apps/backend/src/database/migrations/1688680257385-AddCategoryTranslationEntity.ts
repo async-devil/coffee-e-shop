@@ -22,7 +22,7 @@ export class AddCategoryTranslationEntity1688680257385 implements MigrationInter
 			`--sql
 			ALTER TABLE "category_translation"
 				ADD CONSTRAINT "FK_e2c538aafd6262f061936460f1d" FOREIGN KEY ("category_id")
-				REFERENCES "category"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+				REFERENCES "category"("id") ON DELETE CASCADE ON UPDATE NO ACTION
 			`
 		);
 	}

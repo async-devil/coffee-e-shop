@@ -12,7 +12,7 @@ export class ProductEditionEntity {
 	@Column({ type: "int", name: "product_id", unsigned: true })
 	public productId: number;
 
-	@ManyToOne(() => ProductEntity, (product) => product.editions)
+	@ManyToOne(() => ProductEntity, (product) => product.editions, { onDelete: "CASCADE" })
 	@JoinColumn({ name: "product_id" })
 	public product: ProductEntity;
 
@@ -25,6 +25,6 @@ export class ProductEditionEntity {
 	public price: number;
 
 	/** @example true */
-	@Column({ type: "bool" })
+	@Column({ type: "bool", default: true })
 	public available: boolean;
 }

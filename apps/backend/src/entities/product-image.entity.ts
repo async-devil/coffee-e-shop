@@ -9,7 +9,7 @@ export class ProductImageEntity {
 	@PrimaryColumn({ type: "int", name: "product_id", unsigned: true })
 	public productId: number;
 
-	@ManyToOne(() => ProductEntity, (product) => product.images)
+	@ManyToOne(() => ProductEntity, (product) => product.images, { onDelete: "CASCADE" })
 	@JoinColumn({ name: "product_id" })
 	public product: ProductEntity;
 
@@ -17,7 +17,7 @@ export class ProductImageEntity {
 	@PrimaryColumn({ type: "int", name: "image_id", unsigned: true })
 	public imageId: number;
 
-	@ManyToOne(() => ImageEntity)
+	@ManyToOne(() => ImageEntity, { onDelete: "CASCADE" })
 	@JoinColumn({ name: "image_id" })
 	public image: ImageEntity;
 }

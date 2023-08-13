@@ -26,7 +26,7 @@ export class AddProductImageEntity1688730586667 implements MigrationInterface {
 			`--sql
 			ALTER TABLE "product_image"
 				ADD CONSTRAINT "FK_dbc7d9aa7ed42c9141b968a9ed3" FOREIGN KEY ("product_id")
-				REFERENCES "product"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+				REFERENCES "product"("id") ON DELETE CASCADE ON UPDATE NO ACTION
 			`
 		);
 
@@ -34,7 +34,7 @@ export class AddProductImageEntity1688730586667 implements MigrationInterface {
 			`--sql
 			ALTER TABLE "product_image"
 				ADD CONSTRAINT "FK_d51e7dc05190034e8c9c6476699" FOREIGN KEY ("image_id")
-				REFERENCES "image"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+				REFERENCES "image"("id") ON DELETE CASCADE ON UPDATE NO ACTION
 			`
 		);
 	}

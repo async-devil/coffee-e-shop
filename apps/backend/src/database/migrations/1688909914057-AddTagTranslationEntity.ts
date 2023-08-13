@@ -20,8 +20,8 @@ export class AddTagTranslationEntity1688909914057 implements MigrationInterface 
 		await queryRunner.query(
 			`--sql
 			ALTER TABLE "tag_translation"
-				ADD CONSTRAINT "FK_ae89a18d55a347cb32beb0216ae"
-				FOREIGN KEY ("tag_id") REFERENCES "tag"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+				ADD CONSTRAINT "FK_ae89a18d55a347cb32beb0216ae" FOREIGN KEY ("tag_id")
+				REFERENCES "tag"("id") ON DELETE CASCADE ON UPDATE NO ACTION
 			`
 		);
 	}

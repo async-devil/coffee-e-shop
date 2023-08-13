@@ -12,7 +12,7 @@ export class ProductTranslationEntity {
 	@Column({ type: "int", name: "product_id", unsigned: true })
 	public productId: number;
 
-	@ManyToOne(() => ProductEntity, (product) => product.translations)
+	@ManyToOne(() => ProductEntity, (product) => product.translations, { onDelete: "CASCADE" })
 	@JoinColumn({ name: "product_id" })
 	public product: ProductEntity;
 

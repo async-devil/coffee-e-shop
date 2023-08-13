@@ -5,7 +5,7 @@ import { Repository } from "typeorm";
 import { EntityRepository } from "src/common/entity.repository";
 import { ProductEntity } from "src/entities/product.entity";
 
-import { OperateProductDto } from "./operate-product.dto";
+import { OperateProductByIdDto } from "./operate-product-by-id.dto";
 
 @Injectable()
 export class ProductsRepository extends EntityRepository<ProductEntity> {
@@ -16,21 +16,21 @@ export class ProductsRepository extends EntityRepository<ProductEntity> {
 		super();
 	}
 
-	public async createProduct() {
+	public async create() {
 		const product = new ProductEntity();
 
 		return await this.repository.save(product);
 	}
 
-	public async linkCategoryToProduct(productId: number, categoryId: number) {
-		const product = await this.getProductById({ id: productId });
+	public async linkCategory(productId: number, categoryId: number) {
+		const product = await this.getById({ id: productId });
 
 		product.categoryId = categoryId;
 
 		return await this.repository.save(product);
 	}
 
-	public async getProductById(dto: OperateProductDto) {
+	public async getById(dto: OperateProductByIdDto) {
 		return await this.getOneWhere(dto, {
 			translations: true,
 			editions: true,

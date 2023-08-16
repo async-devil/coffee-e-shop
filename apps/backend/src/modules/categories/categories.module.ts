@@ -5,7 +5,8 @@ import { typeOrmConfigBase } from "src/database/ormconfig";
 import { CategoryEntity } from "src/entities/category.entity";
 
 import { CategoriesController } from "./categories.controller";
-import { CategoriesService } from "./categories.service";
+import { CategoriesRepository } from "./categories.repository";
+import { CategoryTranslationsModule } from "./translations/category-translations.module";
 import { AuthModule } from "../auth/auth.module";
 
 @Module({
@@ -13,9 +14,10 @@ import { AuthModule } from "../auth/auth.module";
 		TypeOrmModule.forRoot(typeOrmConfigBase()),
 		TypeOrmModule.forFeature([CategoryEntity]),
 		AuthModule,
+		CategoryTranslationsModule,
 	],
 	controllers: [CategoriesController],
-	providers: [CategoriesService],
-	exports: [],
+	providers: [CategoriesRepository],
+	exports: [CategoriesRepository],
 })
 export class CategoriesModule {}

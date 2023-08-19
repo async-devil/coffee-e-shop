@@ -13,6 +13,11 @@ import { TagsRepository } from "./tags.repository";
 export class TagsController {
 	constructor(private readonly repository: TagsRepository) {}
 
+	@Get("/tree")
+	public async getTagsTree() {
+		return await this.repository.getTree();
+	}
+
 	@ApiBearerAuth()
 	@Post("/")
 	@UseGuards(AccessTokenGuard)
@@ -30,5 +35,12 @@ export class TagsController {
 	@UseGuards(AccessTokenGuard)
 	public async deleteById(@Param() params: OperateTagByIdDto) {
 		return await this.repository.deleteOneWhere(params);
+	}
+
+	@ApiBearerAuth()
+	@Post("/:id/sub")
+	@UseGuards(AccessTokenGuard)
+	public async createSubTagByParentId(@Param() params: OperateTagByIdDto) {
+		return await this.repository.createSubByParentId(params);
 	}
 }

@@ -1,8 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 import { CategoryEntity } from "./category.entity";
 
 @Entity({ name: "category_translation" })
+@Unique(["category", "language"])
 export class CategoryTranslationEntity {
 	/** @example 1 */
 	@PrimaryGeneratedColumn("identity")
@@ -16,7 +17,7 @@ export class CategoryTranslationEntity {
 	public category: CategoryEntity;
 
 	/** ISO 639-1 @example "en" */
-	@Column({ type: "char", length: 2, unique: true })
+	@Column({ type: "char", length: 2 })
 	public language: string;
 
 	/** @example "coffee" */

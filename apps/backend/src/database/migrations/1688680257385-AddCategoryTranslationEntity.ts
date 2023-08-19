@@ -13,7 +13,7 @@ export class AddCategoryTranslationEntity1688680257385 implements MigrationInter
 				"name"        text NOT NULL,
 				"text"        text NOT NULL,
 
-				CONSTRAINT "UQ_f89edb2f7e0d8e15a569bb70131" UNIQUE ("language"),
+				CONSTRAINT "UQ_72008e0cd4b2335e4eeb0b21a0a" UNIQUE ("category_id", "language"),
 				CONSTRAINT "PK_eeafea0891382f348c30a2a6bc2" PRIMARY KEY ("id"),
 				CONSTRAINT "FK_e2c538aafd6262f061936460f1d" FOREIGN KEY ("category_id")
 					REFERENCES "category"("id") ON DELETE CASCADE ON UPDATE NO ACTION

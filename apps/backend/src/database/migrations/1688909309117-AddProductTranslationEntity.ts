@@ -15,7 +15,7 @@ export class AddProductTranslationEntity1688909309117 implements MigrationInterf
 				"preview_description" text NOT NULL,
 				"text"                text NOT NULL,
 				
-				CONSTRAINT "UQ_8d3e3bbb7f838cdf32c1c5cc092" UNIQUE ("language"),
+				CONSTRAINT "UQ_c16e540c11dbfdbccd8825bf688" UNIQUE ("product_id", "language"),
 				CONSTRAINT "PK_62d00fbc92e7a495701d6fee9d5" PRIMARY KEY ("id"),
 				CONSTRAINT "FK_045befe4da0d3c207a981f4e88b" FOREIGN KEY ("product_id")
 					REFERENCES "product"("id") ON DELETE CASCADE ON UPDATE NO ACTION

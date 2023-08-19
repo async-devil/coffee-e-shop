@@ -1,8 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 import { ProductEntity } from "./product.entity";
 
 @Entity({ name: "product_translation" })
+@Unique(["product", "language"])
 export class ProductTranslationEntity {
 	/** @example 1 */
 	@PrimaryGeneratedColumn("identity")
@@ -17,7 +18,7 @@ export class ProductTranslationEntity {
 	public product: ProductEntity;
 
 	/** ISO 639-1 @example "en" */
-	@Column({ type: "char", length: 2, unique: true })
+	@Column({ type: "char", length: 2 })
 	public language: string;
 
 	/** @example "coffee" */

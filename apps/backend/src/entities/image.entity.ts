@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeor
 @Entity({ name: "image" })
 export class ImageEntity {
 	/** @example 1 */
-	@PrimaryGeneratedColumn("increment")
+	@PrimaryGeneratedColumn("identity")
 	public id: number;
 
 	/** @example "ethiopia-beans-1" */

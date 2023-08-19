@@ -12,7 +12,7 @@ export enum OrderState {
 @Entity({ name: "order" })
 export class OrderEntity {
 	/** @example 1 */
-	@PrimaryGeneratedColumn("increment")
+	@PrimaryGeneratedColumn("identity")
 	public id: number;
 
 	/** @example "created" */

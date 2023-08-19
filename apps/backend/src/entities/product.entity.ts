@@ -20,7 +20,7 @@ import { TagEntity } from "./tag.entity";
 @Entity({ name: "product" })
 export class ProductEntity {
 	/** @example 1 */
-	@PrimaryGeneratedColumn("increment")
+	@PrimaryGeneratedColumn("identity")
 	public id: number;
 
 	/** @example 1 */

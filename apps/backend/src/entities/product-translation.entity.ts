@@ -5,7 +5,7 @@ import { ProductEntity } from "./product.entity";
 @Entity({ name: "product_translation" })
 export class ProductTranslationEntity {
 	/** @example 1 */
-	@PrimaryGeneratedColumn("increment")
+	@PrimaryGeneratedColumn("identity")
 	public id: number;
 
 	/** @example 1 */

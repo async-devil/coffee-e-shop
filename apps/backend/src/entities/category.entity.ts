@@ -5,7 +5,7 @@ import { CategoryTranslationEntity } from "./category-translation.entity";
 @Entity({ name: "category" })
 export class CategoryEntity {
 	/** @example 1 */
-	@PrimaryGeneratedColumn("increment")
+	@PrimaryGeneratedColumn("identity")
 	public id: number;
 
 	@OneToMany(() => CategoryTranslationEntity, (translation) => translation.category)

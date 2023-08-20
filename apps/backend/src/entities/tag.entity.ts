@@ -1,4 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn,
+} from "typeorm";
 
 import { TagTranslationEntity } from "./tag-translation.entity";
 
@@ -21,4 +29,12 @@ export class TagEntity {
 
 	@OneToMany(() => TagTranslationEntity, (tagTranslation) => tagTranslation.tag)
 	public translations: TagTranslationEntity[];
+
+	/** @example "2023-02-22T20:48:40.253Z" */
+	@CreateDateColumn({
+		type: "timestamp with time zone",
+		default: () => "CURRENT_TIMESTAMP",
+		name: "created_at",
+	})
+	public createdAt: Date;
 }

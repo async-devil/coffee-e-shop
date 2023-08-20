@@ -1,4 +1,12 @@
-import { CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn,
+} from "typeorm";
 
 import { CategoryTranslationEntity } from "./category-translation.entity";
 
@@ -7,6 +15,17 @@ export class CategoryEntity {
 	/** @example 1 */
 	@PrimaryGeneratedColumn("identity")
 	public id: number;
+
+	/** @example 1 */
+	@Column({ type: "int", name: "parent_id", unsigned: true, nullable: true })
+	public parentId: number | null;
+
+	@ManyToOne(() => CategoryEntity, { onDelete: "SET NULL" })
+	@JoinColumn({ name: "parent_id" })
+	public parent: CategoryEntity;
+
+	@OneToMany(() => CategoryEntity, (category) => category.parent)
+	public children: CategoryEntity[];
 
 	@OneToMany(() => CategoryTranslationEntity, (translation) => translation.category)
 	public translations: CategoryTranslationEntity[];

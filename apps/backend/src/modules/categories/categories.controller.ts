@@ -20,6 +20,18 @@ export class CategoriesController {
 		return await this.repository.create();
 	}
 
+	@ApiBearerAuth()
+	@Post("/:id/sub")
+	@UseGuards(AccessTokenGuard)
+	public async createSubCategoryByParentId(@Param() params: OperateCategoryByIdDto) {
+		return await this.repository.createSubByParentId(params);
+	}
+
+	@Get("/tree")
+	public async getTagsTree() {
+		return await this.repository.getTree();
+	}
+
 	@Get("/:id")
 	public async getCategoryById(@Param() params: OperateCategoryByIdDto) {
 		return await this.repository.getById(params);

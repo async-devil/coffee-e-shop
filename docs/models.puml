@@ -22,6 +22,7 @@ table(image) {
   primary_key(id): int
   unique_column(name): text
   unique_column(url): text
+  column(is_owned): bool
   column(created_at): timestamptz
 }
 
@@ -51,19 +52,18 @@ table(product_edition) {
 }
 
 table(product_image) {
-  primary_key(id): int
   foreign_key(product_id): int
   foreign_key(image_id): int
 }
 
 table(product_tag) {
-  primary_key(id): int
   foreign_key(product_id): int
   foreign_key(tag_id): int
 }
 
 table(category) {
   primary_key(id): int
+  foreign_key(parent_id): int
   column(created_at): timestamptz
 }
 
@@ -106,6 +106,8 @@ table(order_item) {
 
 table(tag) {
   primary_key(id): int
+  foreign_key(parent_id): int
+  column(created_at): timestamptz
 }
 
 table(tag_translation) {

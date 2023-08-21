@@ -1,5 +1,5 @@
 // Used plugins:
-// eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-jest eslint-plugin-prettier eslint-plugin-promise eslint-plugin-security-node eslint-plugin-sonarjs
+// eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-jest eslint-plugin-prettier eslint-plugin-promise eslint-plugin-security-node eslint-plugin-sonarjs eslint-plugin-unicorn
 
 const mainRules = {
 	"import/order": [
@@ -26,6 +26,7 @@ const mainRules = {
 	"object-curly-newline": 0,
 	"sonarjs/no-duplicate-string": ["error", 10],
 	"import/no-named-as-default": 0,
+	"unicorn/prefer-ternary": 0,
 
 	"no-nested-ternary": 0,
 	"no-bitwise": 1,
@@ -54,10 +55,11 @@ module.exports = {
 		"plugin:sonarjs/recommended",
 		"plugin:promise/recommended",
 		"plugin:security-node/recommended",
+		"plugin:unicorn/recommended",
 	],
 	ignorePatterns: ["**/*.cjs", "dist"],
 	rules: mainRules,
-	plugins: ["prettier", "import", "sonarjs", "promise", "security-node"],
+	plugins: ["prettier", "import", "sonarjs", "promise", "security-node", "unicorn"],
 	settings: {
 		"import/resolver": {
 			typescript: {},

@@ -29,27 +29,27 @@ export class TagTranslationsController {
 	@Post("/:tagId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async createTagTranslation(
-		@Param() params: OperateTagTranslationDto,
+		@Param() parameters: OperateTagTranslationDto,
 		@Body() body: CreateTagTranslationBodyDto
 	) {
-		const dto = Object.assign(params, body);
+		const dto = Object.assign(parameters, body);
 
 		return await this.repository.create(dto);
 	}
 
 	@Get("/:tagId/translations/:language")
-	public async getTagTranslation(@Param() params: OperateTagTranslationDto) {
-		return await this.repository.getOneWhere(params);
+	public async getTagTranslation(@Param() parameters: OperateTagTranslationDto) {
+		return await this.repository.getOneWhere(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Put("/:tagId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async updateTagTranslation(
-		@Param() params: OperateTagTranslationDto,
+		@Param() parameters: OperateTagTranslationDto,
 		@Body() body: UpdateTagTranslationBodyDto
 	) {
-		const dto = Object.assign(params, body);
+		const dto = Object.assign(parameters, body);
 
 		return await this.repository.update(dto);
 	}
@@ -57,7 +57,7 @@ export class TagTranslationsController {
 	@ApiBearerAuth()
 	@Delete("/:tagId/translations/:language")
 	@UseGuards(AccessTokenGuard)
-	public async deleteTagTranslation(@Param() params: OperateTagTranslationDto) {
-		return await this.repository.deleteOneWhere(params);
+	public async deleteTagTranslation(@Param() parameters: OperateTagTranslationDto) {
+		return await this.repository.deleteOneWhere(parameters);
 	}
 }

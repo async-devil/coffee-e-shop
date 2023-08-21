@@ -21,14 +21,14 @@ export class ProductsController {
 	}
 
 	@Get("/:id")
-	public async getProductById(@Param() params: OperateProductByIdDto) {
-		return await this.productsService.getById(params);
+	public async getProductById(@Param() parameters: OperateProductByIdDto) {
+		return await this.productsService.getById(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Delete("/:id")
 	@UseGuards(AccessTokenGuard)
-	public async deleteProductById(@Param() params: OperateProductByIdDto) {
-		return await this.productsService.deleteOneWhere(params);
+	public async deleteProductById(@Param() parameters: OperateProductByIdDto) {
+		return await this.productsService.deleteOneWhere(parameters);
 	}
 }

@@ -23,8 +23,8 @@ export class CategoriesController {
 	@ApiBearerAuth()
 	@Post("/:id/sub")
 	@UseGuards(AccessTokenGuard)
-	public async createSubCategoryByParentId(@Param() params: OperateCategoryByIdDto) {
-		return await this.repository.createSubByParentId(params);
+	public async createSubCategoryByParentId(@Param() parameters: OperateCategoryByIdDto) {
+		return await this.repository.createSubByParentId(parameters);
 	}
 
 	@Get("/tree")
@@ -33,14 +33,14 @@ export class CategoriesController {
 	}
 
 	@Get("/:id")
-	public async getCategoryById(@Param() params: OperateCategoryByIdDto) {
-		return await this.repository.getById(params);
+	public async getCategoryById(@Param() parameters: OperateCategoryByIdDto) {
+		return await this.repository.getById(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Delete("/:id")
 	@UseGuards(AccessTokenGuard)
-	public async deleteCategoryById(@Param() params: OperateCategoryByIdDto) {
-		return await this.repository.deleteOneWhere(params);
+	public async deleteCategoryById(@Param() parameters: OperateCategoryByIdDto) {
+		return await this.repository.deleteOneWhere(parameters);
 	}
 }

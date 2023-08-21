@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 
 import { S3Client } from "@aws-sdk/client-s3";
 import { BadRequestException, Injectable, InternalServerErrorException } from "@nestjs/common";
@@ -19,7 +19,7 @@ export class ImagesService {
 	 * Matches file extension with dot
 	 * @example ".png"
 	 */
-	private readonly fileExtensionRegExp = new RegExp(/\.[0-9a-z]+$/i);
+	private readonly fileExtensionRegExp = new RegExp(/\.[\da-z]+$/i);
 
 	constructor(
 		private readonly filesRepository: ImageFilesRepository,
@@ -42,7 +42,7 @@ export class ImagesService {
 				url: this.filesRepository.getUrl(key),
 				isOwned: true,
 			});
-		} catch (err) {
+		} catch {
 			await this.filesRepository.delete(key);
 
 			throw new InternalServerErrorException();

@@ -16,14 +16,14 @@ export class ProductTagsController {
 	@ApiBearerAuth()
 	@Post("/:productId/tags/:tagId")
 	@UseGuards(AccessTokenGuard)
-	public async linkTagToProduct(@Param() params: OperateProductTagDto) {
-		return await this.repository.link(params);
+	public async linkTagToProduct(@Param() parameters: OperateProductTagDto) {
+		return await this.repository.link(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Delete("/:productId/tags/:tagId")
 	@UseGuards(AccessTokenGuard)
-	public async unlinkTagFromProduct(@Param() params: OperateProductTagDto) {
-		return await this.repository.unlink(params);
+	public async unlinkTagFromProduct(@Param() parameters: OperateProductTagDto) {
+		return await this.repository.unlink(parameters);
 	}
 }

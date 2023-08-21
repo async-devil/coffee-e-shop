@@ -36,7 +36,7 @@ export class UpdateProductEditionByIdBodyDto extends OmitType(UpdateProductEditi
 	"id",
 ]) {}
 
-export class UpdateProductEditionByIdParamsDto extends PickType(UpdateProductEditionByIdDto, [
+export class UpdateProductEditionByIdParametersDto extends PickType(UpdateProductEditionByIdDto, [
 	"productId",
 	"id",
 ]) {}

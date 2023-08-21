@@ -1,7 +1,7 @@
 import { ApiProperty, OmitType, PickType } from "@nestjs/swagger";
 import { IsNumberString, IsOptional, IsString } from "class-validator";
 
-import { IsISO639Alpha2 } from "src/common/ISO639-alpha2.validator";
+import { IsISO639Alpha2 } from "src/common/iso639-alpha2.validator";
 
 export class UpdateProductTranslationByLanguageDto {
 	/** @example 1 */
@@ -44,7 +44,7 @@ export class UpdateProductTranslationByLanguageBodyDto extends OmitType(
 	["productId", "language"]
 ) {}
 
-export class UpdateProductTranslationByLanguageParamsDto extends PickType(
+export class UpdateProductTranslationByLanguageParametersDto extends PickType(
 	UpdateProductTranslationByLanguageDto,
 	["productId", "language"]
 ) {}

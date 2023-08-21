@@ -50,24 +50,24 @@ export class ImagesController {
 	}
 
 	@Get("/records/:name")
-	public async getImageRecordByName(@Param() params: OperateImageRecordByNameDto) {
-		return await this.imageRecordsRepository.getByName(params);
+	public async getImageRecordByName(@Param() parameters: OperateImageRecordByNameDto) {
+		return await this.imageRecordsRepository.getByName(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Put("/records/:name")
 	@UseGuards(AccessTokenGuard)
 	public async updateImageRecordByName(
-		@Param() params: OperateImageRecordByNameDto,
+		@Param() parameters: OperateImageRecordByNameDto,
 		@Body() body: UpdateImageRecordByNameBodyDto
 	) {
-		return await this.imageRecordsRepository.updateByName(Object.assign(body, params));
+		return await this.imageRecordsRepository.updateByName(Object.assign(body, parameters));
 	}
 
 	@ApiBearerAuth()
 	@Delete("/records/:name")
 	@UseGuards(AccessTokenGuard)
-	public async deleteImageRecordByName(@Param() params: OperateImageRecordByNameDto) {
-		return await this.imagesService.deleteImage(params);
+	public async deleteImageRecordByName(@Param() parameters: OperateImageRecordByNameDto) {
+		return await this.imagesService.deleteImage(parameters);
 	}
 }

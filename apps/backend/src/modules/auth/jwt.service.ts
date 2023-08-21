@@ -22,7 +22,7 @@ export class JWTService {
 	public async getJwtData(jwt: string): Promise<jose.JWTVerifyResult> {
 		try {
 			return await jose.jwtVerify(jwt, this.getKey());
-		} catch (err) {
+		} catch {
 			throw new UnauthorizedException("Invalid JWT token");
 		}
 	}
@@ -32,7 +32,7 @@ export class JWTService {
 			const data = await this.getJwtData(jwt);
 
 			return !!data;
-		} catch (err) {
+		} catch {
 			return false;
 		}
 	}

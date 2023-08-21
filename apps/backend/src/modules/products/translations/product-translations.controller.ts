@@ -15,13 +15,13 @@ import { TypeORMErrorFilter } from "src/common/typeorm-error.filter";
 import { AccessTokenGuard } from "src/guards/access-token.guard";
 
 import {
-	CreateProductTranslationParamsDto,
+	CreateProductTranslationParametersDto,
 	CreateProductTranslationBodyDto,
 } from "./dtos/create-product-translation.dto";
 import { DeleteProductTranslationByLanguageDto } from "./dtos/delete-product-translation-by-language.dto";
 import { GetProductTranslationByLanguageDto } from "./dtos/get-product-translation-by-language.dto";
 import {
-	UpdateProductTranslationByLanguageParamsDto,
+	UpdateProductTranslationByLanguageParametersDto,
 	UpdateProductTranslationByLanguageBodyDto,
 } from "./dtos/update-product-translation-by-language.dto";
 import { ProductTranslationsRepository } from "./product-translations.repository";
@@ -36,29 +36,29 @@ export class ProductTranslationsController {
 	@Post("/:productId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async createProductTranslation(
-		@Param() params: CreateProductTranslationParamsDto,
+		@Param() parameters: CreateProductTranslationParametersDto,
 		@Body() dto: CreateProductTranslationBodyDto
 	) {
-		const entityData = Object.assign(dto, params);
+		const entityData = Object.assign(dto, parameters);
 
 		return await this.repository.create(entityData);
 	}
 
 	@Get("/:productId/translations/:language")
 	public async getProductTranslationByLanguage(
-		@Param() params: GetProductTranslationByLanguageDto
+		@Param() parameters: GetProductTranslationByLanguageDto
 	) {
-		return await this.repository.getByLanguage(params);
+		return await this.repository.getByLanguage(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Put("/:productId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async updateProductTranslationByLanguage(
-		@Param() params: UpdateProductTranslationByLanguageParamsDto,
+		@Param() parameters: UpdateProductTranslationByLanguageParametersDto,
 		@Body() dto: UpdateProductTranslationByLanguageBodyDto
 	) {
-		const updateInfo = Object.assign(dto, params);
+		const updateInfo = Object.assign(dto, parameters);
 
 		return await this.repository.updateByLanguage(updateInfo);
 	}
@@ -67,8 +67,8 @@ export class ProductTranslationsController {
 	@Delete("/:productId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async deleteProductTranslationByLanguage(
-		@Param() params: DeleteProductTranslationByLanguageDto
+		@Param() parameters: DeleteProductTranslationByLanguageDto
 	) {
-		return await this.repository.deleteOneWhere(params);
+		return await this.repository.deleteOneWhere(parameters);
 	}
 }

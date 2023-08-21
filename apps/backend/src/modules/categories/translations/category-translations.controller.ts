@@ -29,27 +29,27 @@ export class CategoryTranslationsController {
 	@Post("/:categoryId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async createTagTranslation(
-		@Param() params: OperateCategoryTranslationDto,
+		@Param() parameters: OperateCategoryTranslationDto,
 		@Body() body: CreateCategoryTranslationBodyDto
 	) {
-		const dto = Object.assign(params, body);
+		const dto = Object.assign(parameters, body);
 
 		return await this.repository.create(dto);
 	}
 
 	@Get("/:categoryId/translations/:language")
-	public async getTagTranslation(@Param() params: OperateCategoryTranslationDto) {
-		return await this.repository.getOneWhere(params);
+	public async getTagTranslation(@Param() parameters: OperateCategoryTranslationDto) {
+		return await this.repository.getOneWhere(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Put("/:categoryId/translations/:language")
 	@UseGuards(AccessTokenGuard)
 	public async updateTagTranslation(
-		@Param() params: OperateCategoryTranslationDto,
+		@Param() parameters: OperateCategoryTranslationDto,
 		@Body() body: UpdateCategoryTranslationBodyDto
 	) {
-		const dto = Object.assign(params, body);
+		const dto = Object.assign(parameters, body);
 
 		return await this.repository.update(dto);
 	}
@@ -57,7 +57,7 @@ export class CategoryTranslationsController {
 	@ApiBearerAuth()
 	@Delete("/:categoryId/translations/:language")
 	@UseGuards(AccessTokenGuard)
-	public async deleteTagTranslation(@Param() params: OperateCategoryTranslationDto) {
-		return await this.repository.deleteOneWhere(params);
+	public async deleteTagTranslation(@Param() parameters: OperateCategoryTranslationDto) {
+		return await this.repository.deleteOneWhere(parameters);
 	}
 }

@@ -26,21 +26,21 @@ export class TagsController {
 	}
 
 	@Get("/:id")
-	public async getById(@Param() params: OperateTagByIdDto) {
-		return await this.repository.getById(params);
+	public async getById(@Param() parameters: OperateTagByIdDto) {
+		return await this.repository.getById(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Delete("/:id")
 	@UseGuards(AccessTokenGuard)
-	public async deleteById(@Param() params: OperateTagByIdDto) {
-		return await this.repository.deleteOneWhere(params);
+	public async deleteById(@Param() parameters: OperateTagByIdDto) {
+		return await this.repository.deleteOneWhere(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Post("/:id/sub")
 	@UseGuards(AccessTokenGuard)
-	public async createSubTagByParentId(@Param() params: OperateTagByIdDto) {
-		return await this.repository.createSubByParentId(params);
+	public async createSubTagByParentId(@Param() parameters: OperateTagByIdDto) {
+		return await this.repository.createSubByParentId(parameters);
 	}
 }

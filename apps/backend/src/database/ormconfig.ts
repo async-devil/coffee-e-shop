@@ -1,4 +1,5 @@
-import * as path from "path";
+/* eslint-disable unicorn/prefer-module */
+import * as path from "node:path";
 
 import { DataSource, DataSourceOptions } from "typeorm";
 

@@ -22,7 +22,7 @@ export class AddOrderEntity1688936737842 implements MigrationInterface {
 				"last_name"    text NOT NULL,
 				"middle_name"  text NOT NULL,
 				"language"     character(2) NOT NULL,
-				"price"        numeric(7,2) NOT NULL,
+				"total_price"  numeric(7,2) NOT NULL DEFAULT 0,
 				"country"      character(2) NOT NULL,
 				"region"       text NOT NULL,
 				"city"         text NOT NULL,

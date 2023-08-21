@@ -47,8 +47,8 @@ export class OrderEntity {
 	public language: string;
 
 	/** @example 1032 */
-	@Column({ type: "numeric", precision: 7, scale: 2 })
-	public price: number;
+	@Column({ type: "numeric", name: "total_price", precision: 7, scale: 2, default: 0 })
+	public totalPrice: number;
 
 	/** ISO 3166-2 @example "ua" */
 	@Column({ type: "char", length: 2 })

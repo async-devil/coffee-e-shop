@@ -26,6 +26,6 @@ export class CreateProductEditionDto {
 
 export class CreateProductEditionBodyDto extends OmitType(CreateProductEditionDto, ["productId"]) {}
 
-export class CreateProductEditionParamsDto extends PickType(CreateProductEditionDto, [
+export class CreateProductEditionParametersDto extends PickType(CreateProductEditionDto, [
 	"productId",
 ]) {}

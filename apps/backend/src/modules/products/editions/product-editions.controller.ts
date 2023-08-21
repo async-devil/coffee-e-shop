@@ -16,13 +16,13 @@ import { AccessTokenGuard } from "src/guards/access-token.guard";
 
 import {
 	CreateProductEditionBodyDto,
-	CreateProductEditionParamsDto,
+	CreateProductEditionParametersDto,
 } from "./dtos/create-product-edition.dto";
 import { DeleteProductEditionByIdDto } from "./dtos/delete-product-edition-by-id.dto";
 import { GetProductEditionByIdDto } from "./dtos/get-product-edition-by-id.dto";
 import {
 	UpdateProductEditionByIdBodyDto,
-	UpdateProductEditionByIdParamsDto,
+	UpdateProductEditionByIdParametersDto,
 } from "./dtos/update-product-edition-by-id.dto";
 import { ProductEditionsRepository } from "./product-editions.repository";
 
@@ -36,27 +36,27 @@ export class ProductEditionsController {
 	@Post("/:productId/editions")
 	@UseGuards(AccessTokenGuard)
 	public async createProductEdition(
-		@Param() params: CreateProductEditionParamsDto,
+		@Param() parameters: CreateProductEditionParametersDto,
 		@Body() body: CreateProductEditionBodyDto
 	) {
-		const dto = Object.assign(body, params);
+		const dto = Object.assign(body, parameters);
 
 		return await this.repository.create(dto);
 	}
 
 	@Get("/:productId/editions/:id")
-	public async getProductEditionById(@Param() params: GetProductEditionByIdDto) {
-		return await this.repository.getById(params);
+	public async getProductEditionById(@Param() parameters: GetProductEditionByIdDto) {
+		return await this.repository.getById(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Put("/:productId/editions/:id")
 	@UseGuards(AccessTokenGuard)
 	public async updateProductEditionById(
-		@Param() params: UpdateProductEditionByIdParamsDto,
+		@Param() parameters: UpdateProductEditionByIdParametersDto,
 		@Body() body: UpdateProductEditionByIdBodyDto
 	) {
-		const dto = Object.assign(body, params);
+		const dto = Object.assign(body, parameters);
 
 		return await this.repository.updateById(dto);
 	}
@@ -64,7 +64,7 @@ export class ProductEditionsController {
 	@ApiBearerAuth()
 	@Delete("/:productId/editions/:id")
 	@UseGuards(AccessTokenGuard)
-	public async deleteProductEditionById(@Param() params: DeleteProductEditionByIdDto) {
-		return await this.repository.deleteOneWhere(params);
+	public async deleteProductEditionById(@Param() parameters: DeleteProductEditionByIdDto) {
+		return await this.repository.deleteOneWhere(parameters);
 	}
 }

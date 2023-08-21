@@ -16,14 +16,14 @@ export class ProductImagesController {
 	@ApiBearerAuth()
 	@Post("/:productId/images/:imageId")
 	@UseGuards(AccessTokenGuard)
-	public async linkImageToProduct(@Param() params: OperateProductImageDto) {
-		return await this.repository.link(params);
+	public async linkImageToProduct(@Param() parameters: OperateProductImageDto) {
+		return await this.repository.link(parameters);
 	}
 
 	@ApiBearerAuth()
 	@Delete("/:productId/images/:imageId")
 	@UseGuards(AccessTokenGuard)
-	public async unlinkImageFromProduct(@Param() params: OperateProductImageDto) {
-		return await this.repository.unlink(params);
+	public async unlinkImageFromProduct(@Param() parameters: OperateProductImageDto) {
+		return await this.repository.unlink(parameters);
 	}
 }

@@ -24,7 +24,7 @@ const mainRules = {
 	"implicit-arrow-linebreak": 0,
 	"operator-linebreak": 0,
 	"object-curly-newline": 0,
-	"sonarjs/no-duplicate-string": ["error", 10],
+	"sonarjs/no-duplicate-string": ["error", { threshold: 10 }],
 	"import/no-named-as-default": 0,
 	"unicorn/prefer-ternary": 0,
 

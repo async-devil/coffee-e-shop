@@ -1,5 +1,5 @@
 import { ApiProperty, OmitType, PickType } from "@nestjs/swagger";
-import { IsBoolean, IsNumber, IsNumberString, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsNumber, IsNumberString, IsOptional, IsString, Min } from "class-validator";
 
 export class CreateProductEditionDto {
 	/** @example 1 */
@@ -14,7 +14,8 @@ export class CreateProductEditionDto {
 
 	/** @example 259 */
 	@IsNumber()
-	@ApiProperty({ example: 259 })
+	@Min(0)
+	@ApiProperty({ example: 259, minimum: 0 })
 	public price: number;
 
 	/** @example true */

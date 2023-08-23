@@ -15,7 +15,8 @@ export class AddProductEditionEntity1688727902946 implements MigrationInterface 
 
 				CONSTRAINT "PK_25a21ffdeae9729dfb15d1ed2c5" PRIMARY KEY ("id"),
 				CONSTRAINT "FK_8deaa2e2ec27ecdfc99f5c61adc" FOREIGN KEY ("product_id")
-					REFERENCES "product"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+					REFERENCES "product"("id") ON DELETE CASCADE ON UPDATE NO ACTION,
+				CONSTRAINT "CHK_22ad096df1c788d07b9f34d210" CHECK ("price" >= 0)
 			)`
 		);
 	}

@@ -11,10 +11,13 @@ import { ConfigService } from "@nestjs/config";
 export class ImageFilesRepository {
 	private readonly s3Client: S3Client;
 
-	private readonly region = this.configService.get<string>("aws.region");
-	private readonly imagesBucketName = this.configService.get<string>("s3.imagesBucketName");
+	private readonly region: string;
+	private readonly imagesBucketName: string;
 
 	constructor(private readonly configService: ConfigService) {
+		this.region = this.configService.get<string>("aws.region");
+		this.imagesBucketName = this.configService.get<string>("s3.imagesBucketName");
+
 		if (process.env.NODE_ENV === "development") {
 			this.s3Client = new S3Client({
 				credentials: {

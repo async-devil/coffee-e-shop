@@ -1,4 +1,12 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+	Check,
+	Column,
+	CreateDateColumn,
+	Entity,
+	Generated,
+	OneToMany,
+	PrimaryGeneratedColumn,
+} from "typeorm";
 
 import { OrderItemEntity } from "./order-item.entity";
 
@@ -10,13 +18,19 @@ export enum OrderState {
 }
 
 @Entity({ name: "order" })
+@Check(`"total_price" >= 0`)
 export class OrderEntity {
 	/** @example 1 */
 	@PrimaryGeneratedColumn("identity")
 	public id: number;
 
+	/** @example "example@mail.com" */
+	@Generated("uuid")
+	@Column({ type: "uuid" })
+	public key: number;
+
 	/** @example "created" */
-	@Column({ type: "enum", enum: OrderState, enumName: "order_state" })
+	@Column({ type: "enum", enum: OrderState, enumName: "order_state", default: "created" })
 	public state: OrderState;
 
 	@OneToMany(() => OrderItemEntity, (orderItem) => orderItem.order)
@@ -47,7 +61,13 @@ export class OrderEntity {
 	public language: string;
 
 	/** @example 1032 */
-	@Column({ type: "numeric", name: "total_price", precision: 7, scale: 2, default: 0 })
+	@Column({
+		type: "numeric",
+		name: "total_price",
+		precision: 7,
+		scale: 2,
+		default: 0,
+	})
 	public totalPrice: number;
 
 	/** ISO 3166-2 @example "ua" */

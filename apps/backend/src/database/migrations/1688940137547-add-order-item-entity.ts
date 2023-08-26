@@ -20,7 +20,10 @@ export class AddOrderItemEntity1688940137547 implements MigrationInterface {
 				CONSTRAINT "FK_e9674a6053adbaa1057848cddfa" FOREIGN KEY ("order_id")
 					REFERENCES "order"("id") ON DELETE CASCADE ON UPDATE NO ACTION,
 				CONSTRAINT "FK_5e17c017aa3f5164cb2da5b1c6b" FOREIGN KEY ("product_id")
-					REFERENCES "product"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+					REFERENCES "product"("id") ON DELETE NO ACTION ON UPDATE NO ACTION,
+				CONSTRAINT "CHK_1d310a8518059e5d0d39e7da15" CHECK ("price" >= 0),
+				CONSTRAINT "CHK_5e568f6006994821cb472ea50e" CHECK ("amount" > 0),
+				CONSTRAINT "CHK_cf17e8303514aaf4b5e43cf616" CHECK ("total_price" >= 0)
 			)`
 		);
 	}

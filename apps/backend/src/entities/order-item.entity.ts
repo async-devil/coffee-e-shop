@@ -1,9 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 import { OrderEntity } from "./order.entity";
 import { ProductEntity } from "./product.entity";
 
 @Entity({ name: "order_item" })
+@Check(`"price" >= 0`)
+@Check(`"total_price" >= 0`)
+@Check(`"amount" > 0`)
 export class OrderItemEntity {
 	/** @example 1 */
 	@PrimaryGeneratedColumn("identity")

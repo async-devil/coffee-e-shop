@@ -24,10 +24,10 @@ export class OrderEntity {
 	@PrimaryGeneratedColumn("identity")
 	public id: number;
 
-	/** @example "example@mail.com" */
+	/** @example "123e4567-e89b-12d3-a456-426655440000" */
 	@Generated("uuid")
 	@Column({ type: "uuid" })
-	public key: number;
+	public key: string;
 
 	/** @example "created" */
 	@Column({ type: "enum", enum: OrderState, enumName: "order_state", default: "created" })

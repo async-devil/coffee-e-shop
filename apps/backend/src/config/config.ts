@@ -1,5 +1,5 @@
 export default () => ({
-	port: Number.parseInt(process.env.PORT, 10) || 8000,
+	port: Number.parseInt(process.env.PORT, 10) || 80,
 	postgres: {
 		host: process.env.POSTGRES_HOST || "127.0.0.1",
 		port: Number.parseInt(process.env.POSTGRES_PORT, 10) || 5432,

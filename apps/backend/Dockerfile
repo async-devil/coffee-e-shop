@@ -22,13 +22,9 @@ FROM node:18.14.0-alpine As build
 WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
-COPY --chown=node:node --from=build_dev /usr/src/app/node_modules ./node_modules
-COPY --chown=node:node . .
-
-RUN yarn build
-ENV NODE_ENV production
-
 RUN yarn install --frozen-lockfile --production && yarn cache clean
+
+COPY --chown=node:node . .
 
 USER node
 
@@ -38,11 +34,14 @@ USER node
 
 FROM node:18.14.0-alpine As production
 
+COPY --chown=node:node package*.json ./
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
-COPY --chown=node:node --from=build /usr/src/app/dist ./dist
-COPY --chown=node:node --from=build /usr/src/app/scripts ./scripts
+COPY --chown=node:node . .
 
-EXPOSE 8000
+ENV NODE_ENV production
+RUN yarn build
+
+EXPOSE 8000 80
 
 RUN chmod +x ./scripts/start.sh
 CMD ["/bin/sh", "./scripts/start.sh"]
@@ -60,10 +59,10 @@ COPY --chown=node:node package*.json ./
 COPY --chown=node:node --from=build_dev /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node . .
 
-RUN yarn build
 ENV NODE_ENV development
+RUN yarn build
 
-EXPOSE 8000
+EXPOSE 8000 80
 
 RUN chmod +x ./scripts/start.sh
 CMD ["/bin/sh", "./scripts/start.sh"]

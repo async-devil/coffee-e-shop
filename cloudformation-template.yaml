@@ -8,10 +8,47 @@ Parameters:
     Description: The name of the S3 Bucket to create
 
 Resources:
-  IAMShopAdmin:
-    Type: AWS::IAM::User
+  # You can’t assign an IAM role directly to the EC2 instance, but you can assign an instance profile, which passes role information to the EC2 instance.
+  RootInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
     Properties:
-      UserName: coffee-e-shop-admin
+      Path: /
+      Roles:
+        - !Ref S3WritableRole
+
+  S3WritableRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+
+  RolePolicies:
+    Type: AWS::IAM::Policy
+    DependsOn:
+      - NodeBackend
+    Properties:
+      PolicyName: NodeBackendPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: s3:*
+            Resource: "*"
+      Roles:
+        - !Ref S3WritableRole
+
+  IPAddress:
+    DeletionPolicy: Retain
+    Properties:
+      Domain: vpc
+      InstanceId: !Ref NodeBackend
+    Type: AWS::EC2::EIP
 
   NodeBackend:
     Type: AWS::EC2::Instance
@@ -19,18 +56,22 @@ Resources:
       InstanceType: t2.micro
       ImageId: ami-051f7e7f6c2f40dc1
       KeyName: aws-key-coffee-e-shop
+      IamInstanceProfile: !Ref RootInstanceProfile
       SecurityGroups:
         - !Ref NodeBackendSecurityGroup
       UserData: !Base64 |
         #!/bin/bash
         sudo yum update -y
-        sudo yum search docker
-        sudo yum info docker
         sudo yum install docker -y
+        sudo yum install git -y
 
         wget https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) 
         sudo mv docker-compose-$(uname -s)-$(uname -m) /usr/local/bin/docker-compose
         sudo chmod -v +x /usr/local/bin/docker-compose
+
+        git clone https://github.com/async-devil/coffee-e-shop.git ~/coffee-e-shop
+        cd ~/coffee-e-shop
+        touch .prod.env
 
         sudo systemctl enable docker.service
         sudo systemctl start docker.service
@@ -38,11 +79,15 @@ Resources:
   NodeBackendSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: allow ssh, http and docker ports
+      GroupDescription: allow ssh and http
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 5050
+          ToPort: 5050
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 22
@@ -73,11 +118,7 @@ Resources:
             Principal: "*"
             Resource: !Sub "arn:aws:s3:::${S3ImagesBucket}/*"
 
-          - Sid: WriteAndDeleteForBucketOwner
-            Effect: Allow
-            Action:
-              - s3:PutObject
-              - s3:DeleteObject
-            Principal:
-              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:user/${IAMShopAdmin}"
-            Resource: !Sub "arn:aws:s3:::${S3ImagesBucket}/*"
+Outputs:
+  ElasticIP:
+    Value: !Ref IPAddress
+    Description: Elastic IP address

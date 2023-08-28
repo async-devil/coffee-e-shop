@@ -57,7 +57,7 @@ services:
     env_file: ./.dev.env
 
     ports:
-      - 8000:8000
+      - ${PORT}:${PORT}
 
     depends_on:
       - postgres

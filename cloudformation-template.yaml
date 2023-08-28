@@ -13,6 +13,42 @@ Resources:
     Properties:
       UserName: coffee-e-shop-admin
 
+  NodeBackend:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-051f7e7f6c2f40dc1
+      KeyName: aws-key-coffee-e-shop
+      SecurityGroups:
+        - !Ref NodeBackendSecurityGroup
+      UserData: !Base64 |
+        #!/bin/bash
+        sudo yum update -y
+        sudo yum search docker
+        sudo yum info docker
+        sudo yum install docker -y
+
+        wget https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) 
+        sudo mv docker-compose-$(uname -s)-$(uname -m) /usr/local/bin/docker-compose
+        sudo chmod -v +x /usr/local/bin/docker-compose
+
+        sudo systemctl enable docker.service
+        sudo systemctl start docker.service
+
+  NodeBackendSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: allow ssh, http and docker ports
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
   S3ImagesBucket:
     Type: AWS::S3::Bucket
     Properties:

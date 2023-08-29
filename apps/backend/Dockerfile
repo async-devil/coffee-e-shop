@@ -43,8 +43,8 @@ RUN yarn build
 
 EXPOSE 8000 80
 
-RUN chmod +x ./scripts/start.sh
-CMD ["/bin/sh", "./scripts/start.sh"]
+RUN chmod +x ./scripts/start-prod.sh
+CMD ["/bin/sh", "./scripts/start-prod.sh"]
 
 
 ###################
@@ -60,9 +60,8 @@ COPY --chown=node:node --from=build_dev /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node . .
 
 ENV NODE_ENV development
-RUN yarn build
 
 EXPOSE 8000 80
 
-RUN chmod +x ./scripts/start.sh
-CMD ["/bin/sh", "./scripts/start.sh"]
+RUN chmod +x ./scripts/start-dev.sh
+CMD ["/bin/sh", "./scripts/start-dev.sh"]

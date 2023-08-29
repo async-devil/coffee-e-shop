@@ -43,13 +43,6 @@ Resources:
       Roles:
         - !Ref S3WritableRole
 
-  IPAddress:
-    DeletionPolicy: Retain
-    Properties:
-      Domain: vpc
-      InstanceId: !Ref NodeBackend
-    Type: AWS::EC2::EIP
-
   NodeBackend:
     Type: AWS::EC2::Instance
     Properties:
@@ -63,15 +56,14 @@ Resources:
         #!/bin/bash
         sudo yum update -y
         sudo yum install docker -y
-        sudo yum install git -y
+
+        wget https://github.com/async-devil/coffee-e-shop/archive/refs/heads/main.tar.gz
+        tar -xzf main.tar.gz -C /home/ec2-user
+        cp /home/ec2-user/coffee-e-shop-main/.env.example /home/ec2-user/coffee-e-shop-main/.prod.env
 
         wget https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) 
         sudo mv docker-compose-$(uname -s)-$(uname -m) /usr/local/bin/docker-compose
         sudo chmod -v +x /usr/local/bin/docker-compose
-
-        git clone https://github.com/async-devil/coffee-e-shop.git ~/coffee-e-shop
-        cd ~/coffee-e-shop
-        touch .prod.env
 
         sudo systemctl enable docker.service
         sudo systemctl start docker.service
@@ -117,8 +109,3 @@ Resources:
             Action: s3:GetObject
             Principal: "*"
             Resource: !Sub "arn:aws:s3:::${S3ImagesBucket}/*"
-
-Outputs:
-  ElasticIP:
-    Value: !Ref IPAddress
-    Description: Elastic IP address
